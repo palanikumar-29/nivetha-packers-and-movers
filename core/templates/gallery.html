@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Photo Gallery | Nivetha Packers and Movers Tiruppur{% endblock %}
+{% block meta_description %}View photos of our household packing, vehicle loading, and transport moves in Tiruppur, Chennai, Madurai and nearby towns.{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Heading -->
+        <div class="max-w-3xl mb-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-heading leading-tight mb-4">
+                Our work in photos
+            </h1>
+            <p class="text-lg text-theme-muted leading-relaxed">
+                Photos from packing, loading, and moving jobs in Tiruppur and on trips to Chennai, Madurai and nearby towns.
+            </p>
+        </div>
+
+        <!-- Responsive Gallery Grid -->
+        {% if images %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+            {% for item in images %}
+            <div class="bg-theme-surface border border-theme-border rounded-lg overflow-hidden flex flex-col shadow-sm">
+                <div class="aspect-[4/3] bg-theme-alt overflow-hidden">
+                    <img src="{{ item.image.url }}" alt="{{ item.caption|default:'Nivetha Packers and Movers photo' }}" width="600" height="450" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                </div>
+                {% if item.caption %}
+                <div class="p-4 border-t border-theme-border flex-grow">
+                    <p class="text-theme-body text-sm leading-normal">{{ item.caption }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="border border-theme-border rounded-lg p-12 text-center bg-theme-alt mb-12">
+            <p class="text-theme-muted text-base sm:text-lg">
+                We will post photos of our moves here shortly. Call us or send a quote request for details on how we handle your goods.
+            </p>
+        </div>
+        {% endif %}
+
+        <!-- Call to Action -->
+        <div class="bg-theme-alt border border-theme-border p-8 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <h2 class="text-2xl font-bold text-theme-heading mb-2">Planning a move soon?</h2>
+                <p class="text-theme-muted text-base">Send your move details to receive a quote.</p>
+            </div>
+            <a href="{% url 'core:contact' %}#quote-form" class="inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-base px-6 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lorry-orange min-h-[44px] whitespace-nowrap">
+                Get a quote
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

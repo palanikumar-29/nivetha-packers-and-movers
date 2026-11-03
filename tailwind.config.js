@@ -24,6 +24,7 @@ module.exports = {
         },
         lorry: {
           orange: '#F26B1D',
+          'orange-hover': '#E05E13',
           dark: '#1F2933',
         },
         route: {

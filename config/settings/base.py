@@ -126,6 +126,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Business contact & channels (read from environment; never hardcoded)
 BUSINESS_PHONE = config('BUSINESS_PHONE', default='')
 BUSINESS_WHATSAPP = config('BUSINESS_WHATSAPP', default='')
+BUSINESS_ADDRESS = config('BUSINESS_ADDRESS', default='Tiruppur, Tamil Nadu')
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
 TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
 

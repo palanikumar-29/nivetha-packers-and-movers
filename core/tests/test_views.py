@@ -1,9 +1,12 @@
 import re
+import tempfile
+import shutil
 from pathlib import Path
 from django.test import TestCase, Client, override_settings
 from django.conf import settings
 from django.urls import reverse
-from core.models import Service
+from django.core.files.uploadedfile import SimpleUploadedFile
+from core.models import Service, GalleryImage
 
 
 class HomePageViewTest(TestCase):
@@ -72,7 +75,6 @@ class HomePageViewTest(TestCase):
         self.assertIn("Chennai", content)
         self.assertIn("Madurai", content)
         self.assertIn("Nearby towns", content)
-        # Verify AI labels are removed from route board
         self.assertNotIn("ROUTE 47", content)
         self.assertNotIn("TAMIL NADU CORRIDOR", content)
         self.assertNotIn("ORIGIN HUB", content)
@@ -106,14 +108,9 @@ class HomePageViewTest(TestCase):
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
 
-        # Form presence and CSRF
         self.assertIn('<form', content)
         self.assertIn('csrfmiddlewaretoken', content)
-
-        # Honeypot field
         self.assertIn('name="website"', content)
-
-        # Form input fields
         self.assertIn('name="name"', content)
         self.assertIn('name="phone"', content)
         self.assertIn('name="move_type"', content)
@@ -121,8 +118,6 @@ class HomePageViewTest(TestCase):
         self.assertIn('name="moving_to"', content)
         self.assertIn('name="preferred_date"', content)
         self.assertIn('name="details"', content)
-
-        # Submit button text
         self.assertIn("Send request", content)
         self.assertNotIn("Request free quote", content)
 
@@ -151,23 +146,18 @@ class HomePageViewTest(TestCase):
         self.assertTrue(css_path.exists(), f"Compiled CSS not found at {css_path}")
         css_content = css_path.read_text(encoding='utf-8')
 
-        # Light tokens
         self.assertIn('--color-bg-page:#fff', css_content)
         self.assertIn('--color-bg-alt:#f4f6f8', css_content)
         self.assertIn('--color-text-heading:#16325c', css_content)
         self.assertIn('--color-text-body:#1f2933', css_content)
         self.assertIn('--color-text-muted:#52606d', css_content)
         self.assertIn('--color-border:#d9e0e6', css_content)
-
-        # Dark tokens (deep navy)
         self.assertIn('--color-bg-page:#0f1b2d', css_content)
         self.assertIn('--color-bg-alt:#16263c', css_content)
         self.assertIn('--color-border:#2b3e57', css_content)
         self.assertIn('--color-bg-header:#0b1524', css_content)
-
-        # Shared brand tokens
-        self.assertIn('#f26b1d', css_content)  # lorry orange
-        self.assertIn('#0b6b3a', css_content)  # route green
+        self.assertIn('#f26b1d', css_content)
+        self.assertIn('#0b6b3a', css_content)
 
     def test_ai_patterns_and_invented_claims_removed(self):
         """Verify AI clichés, eyebrow badges, and unconfirmed claims are not in page copy."""
@@ -204,11 +194,8 @@ class HomePageViewTest(TestCase):
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
 
-        # Check section container alignment
         self.assertIn('id="quote-form"', content)
         self.assertIn('max-w-6xl mx-auto px-4 sm:px-6 lg:px-8', content)
-
-        # Check 2-column desktop grid
         self.assertIn('grid grid-cols-1 lg:grid-cols-12', content)
         self.assertIn('lg:col-span-5', content)
         self.assertIn('lg:col-span-7', content)
@@ -228,3 +215,358 @@ class HomePageViewTest(TestCase):
         content = response.content.decode('utf-8')
         self.assertNotIn('tel:9', content)
         self.assertNotIn('https://wa.me/9', content)
+
+
+class ServicesPageViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('core:services')
+
+    def test_services_page_returns_http_200(self):
+        """Verify GET /services/ returns HTTP 200."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_services_page_has_exactly_one_h1(self):
+        """Verify Services page has exactly one <h1> element."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        h1_matches = re.findall(r'<h1[^>]*>(.*?)</h1>', content, re.IGNORECASE | re.DOTALL)
+        self.assertEqual(len(h1_matches), 1, f"Expected 1 <h1>, found {len(h1_matches)}")
+        self.assertIn("Moving services in Tiruppur", h1_matches[0])
+
+    def test_seo_title_and_description_limits(self):
+        """Verify title is <= 60 chars and meta description is <= 160 chars."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(title_match)
+        title = title_match.group(1).strip()
+        self.assertLessEqual(len(title), 60)
+
+        desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(desc_match)
+        description = desc_match.group(1).strip()
+        self.assertLessEqual(len(description), 160)
+
+    def test_canonical_link_present(self):
+        """Verify canonical link is present matching /services/."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('<link rel="canonical"', content)
+        self.assertIn('/services/', content)
+
+    def test_local_keywords_present(self):
+        """Verify Tiruppur, Chennai, and Madurai appear naturally in copy."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn("Tiruppur", content)
+        self.assertIn("Chennai", content)
+        self.assertIn("Madurai", content)
+
+    def test_services_active_ordering_and_inactive_excluded(self):
+        """Verify active services display in order and inactive services are excluded."""
+        Service.objects.create(title='Vehicle Moving', description='Two-wheelers transported.', order=2, is_active=True)
+        Service.objects.create(title='House Moving', description='Household items shifted.', order=1, is_active=True)
+        Service.objects.create(title='Inactive Service', description='Hidden.', order=0, is_active=False)
+
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn("House Moving", content)
+        self.assertIn("Vehicle Moving", content)
+        self.assertNotIn("Inactive Service", content)
+
+        pos1 = content.index("House Moving")
+        pos2 = content.index("Vehicle Moving")
+        self.assertLess(pos1, pos2)
+
+    def test_services_empty_state(self):
+        """Verify friendly fallback message when no services are in database."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn("We will list our services here shortly", content)
+
+    def test_quote_cta_links_to_contact_page_form(self):
+        """Verify CTA at end links to contact quote form."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn(reverse('core:contact') + '#quote-form', content)
+
+
+class GalleryPageViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('core:gallery')
+        self.temp_media = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.temp_media, ignore_errors=True)
+
+    def test_gallery_page_returns_http_200(self):
+        """Verify GET /gallery/ returns HTTP 200."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_gallery_page_has_exactly_one_h1(self):
+        """Verify Gallery page has exactly one <h1> element."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        h1_matches = re.findall(r'<h1[^>]*>(.*?)</h1>', content, re.IGNORECASE | re.DOTALL)
+        self.assertEqual(len(h1_matches), 1, f"Expected 1 <h1>, found {len(h1_matches)}")
+        self.assertIn("Our work in photos", h1_matches[0])
+
+    def test_seo_title_and_description_limits(self):
+        """Verify title is <= 60 chars and meta description is <= 160 chars."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(title_match)
+        self.assertLessEqual(len(title_match.group(1).strip()), 60)
+
+        desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(desc_match)
+        self.assertLessEqual(len(desc_match.group(1).strip()), 160)
+
+    def test_canonical_link_present(self):
+        """Verify canonical link is present matching /gallery/."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('<link rel="canonical"', content)
+        self.assertIn('/gallery/', content)
+
+    def test_gallery_images_display_lazy_loading_and_alt_text(self):
+        """Verify active GalleryImage renders with loading=lazy, width, height, and caption as alt."""
+        with override_settings(MEDIA_ROOT=self.temp_media):
+            dummy_file = SimpleUploadedFile('truck.gif', b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b', content_type='image/gif')
+            GalleryImage.objects.create(image=dummy_file, caption='Packing household goods in Tiruppur', order=1, is_active=True)
+
+            inactive_file = SimpleUploadedFile('secret.gif', b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b', content_type='image/gif')
+            GalleryImage.objects.create(image=inactive_file, caption='Hidden photo', order=2, is_active=False)
+
+            response = self.client.get(self.url)
+            content = response.content.decode('utf-8')
+            self.assertIn('loading="lazy"', content)
+            self.assertIn('width="600"', content)
+            self.assertIn('height="450"', content)
+            self.assertIn('alt="Packing household goods in Tiruppur"', content)
+            self.assertIn('Packing household goods in Tiruppur', content)
+            self.assertNotIn('Hidden photo', content)
+
+    def test_gallery_empty_state(self):
+        """Verify friendly fallback message when no gallery images are in database."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn("We will post photos of our moves here shortly", content)
+
+    def test_local_media_pattern_configured_when_debug(self):
+        """Verify media URL pattern matches uploaded files when DEBUG=True."""
+        with override_settings(DEBUG=True):
+            from django.conf.urls.static import static
+            patterns = static(settings.MEDIA_URL, document_root=self.temp_media)
+            self.assertEqual(len(patterns), 1)
+            self.assertIsNotNone(patterns[0].pattern.match('media/gallery/sample.jpg'))
+
+
+class AboutPageViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('core:about')
+
+    def test_about_page_returns_http_200(self):
+        """Verify GET /about/ returns HTTP 200."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_about_page_has_exactly_one_h1(self):
+        """Verify About page has exactly one <h1> element."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        h1_matches = re.findall(r'<h1[^>]*>(.*?)</h1>', content, re.IGNORECASE | re.DOTALL)
+        self.assertEqual(len(h1_matches), 1, f"Expected 1 <h1>, found {len(h1_matches)}")
+        self.assertIn("About Nivetha Packers and Movers", h1_matches[0])
+
+    def test_seo_title_and_description_limits(self):
+        """Verify title is <= 60 chars and meta description is <= 160 chars."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(title_match)
+        self.assertLessEqual(len(title_match.group(1).strip()), 60)
+
+        desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(desc_match)
+        self.assertLessEqual(len(desc_match.group(1).strip()), 160)
+
+    def test_canonical_link_present(self):
+        """Verify canonical link is present matching /about/."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('<link rel="canonical"', content)
+        self.assertIn('/about/', content)
+
+    def test_neutral_copy_only_without_invented_claims(self):
+        """Verify About page only says what is known without fabricated claims."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn("Tiruppur", content)
+        self.assertIn("Chennai", content)
+        self.assertIn("Madurai", content)
+        self.assertIn("Household shifting", content)
+        self.assertIn("Office relocation", content)
+        self.assertIn("Vehicle transport", content)
+
+
+class ContactPageViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('core:contact')
+
+    def test_contact_page_returns_http_200(self):
+        """Verify GET /contact/ returns HTTP 200."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_page_has_exactly_one_h1(self):
+        """Verify Contact page has exactly one <h1> element."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        h1_matches = re.findall(r'<h1[^>]*>(.*?)</h1>', content, re.IGNORECASE | re.DOTALL)
+        self.assertEqual(len(h1_matches), 1, f"Expected 1 <h1>, found {len(h1_matches)}")
+        self.assertIn("Contact Nivetha Packers and Movers", h1_matches[0])
+
+    def test_seo_title_and_description_limits(self):
+        """Verify title is <= 60 chars and meta description is <= 160 chars."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(title_match)
+        self.assertLessEqual(len(title_match.group(1).strip()), 60)
+
+        desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
+        self.assertIsNotNone(desc_match)
+        self.assertLessEqual(len(desc_match.group(1).strip()), 160)
+
+    def test_canonical_link_present(self):
+        """Verify canonical link is present matching /contact/."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('<link rel="canonical"', content)
+        self.assertIn('/contact/', content)
+
+    @override_settings(BUSINESS_PHONE='919876543210', BUSINESS_WHATSAPP='919876543210', BUSINESS_ADDRESS='123 Avinashi Road, Tiruppur, Tamil Nadu')
+    def test_contact_details_render_from_settings(self):
+        """Verify phone, WhatsApp, and address are rendered from settings/env."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('tel:919876543210', content)
+        self.assertIn('https://wa.me/919876543210', content)
+        self.assertIn('123 Avinashi Road, Tiruppur, Tamil Nadu', content)
+
+    def test_quote_form_markup_present_in_contact_page(self):
+        """Verify quote form partial is included in Contact page with CSRF and honeypot."""
+        response = self.client.get(self.url)
+        content = response.content.decode('utf-8')
+        self.assertIn('id="quote-form"', content)
+        self.assertIn('csrfmiddlewaretoken', content)
+        self.assertIn('name="website"', content)
+        self.assertIn('name="name"', content)
+        self.assertIn('name="phone"', content)
+        self.assertIn('Send request', content)
+
+
+class CrossPageSiteTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.urls = {
+            'home': reverse('core:home'),
+            'services': reverse('core:services'),
+            'gallery': reverse('core:gallery'),
+            'about': reverse('core:about'),
+            'contact': reverse('core:contact'),
+        }
+
+    def test_all_five_pages_return_http_200(self):
+        """Verify each of the 5 public pages returns HTTP 200."""
+        for name, url in self.urls.items():
+            with self.subTest(page=name):
+                response = self.client.get(url)
+                self.assertEqual(response.status_code, 200)
+
+    def test_each_page_has_unique_title_and_description(self):
+        """Verify title and meta description are unique across all 5 pages."""
+        titles = set()
+        descriptions = set()
+
+        for name, url in self.urls.items():
+            response = self.client.get(url)
+            content = response.content.decode('utf-8')
+
+            title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+            self.assertIsNotNone(title_match, f"Missing title in {name}")
+            title = title_match.group(1).strip()
+            self.assertNotIn(title, titles, f"Duplicate title found on {name}: {title}")
+            titles.add(title)
+
+            desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
+            self.assertIsNotNone(desc_match, f"Missing meta description in {name}")
+            desc = desc_match.group(1).strip()
+            self.assertNotIn(desc, descriptions, f"Duplicate description found on {name}: {desc}")
+            descriptions.add(desc)
+
+        self.assertEqual(len(titles), 5)
+        self.assertEqual(len(descriptions), 5)
+
+    def test_navigation_links_to_all_five_pages_in_header_and_footer(self):
+        """Verify header and footer contain links to all 5 pages from any page."""
+        response = self.client.get(self.urls['home'])
+        content = response.content.decode('utf-8')
+
+        for name, url in self.urls.items():
+            with self.subTest(target=name):
+                self.assertIn(f'href="{url}"', content)
+
+    def test_mobile_menu_details_present_with_accessible_targets(self):
+        """Verify zero-JS <details> mobile menu exists with min-h-[44px] tap targets."""
+        response = self.client.get(self.urls['home'])
+        content = response.content.decode('utf-8')
+        self.assertIn('<details class="md:hidden', content)
+        self.assertIn('aria-label="Toggle navigation menu"', content)
+        self.assertIn('min-h-[44px]', content)
+
+    def test_quote_form_partial_used_on_both_home_and_contact(self):
+        """Verify quote form is present on both Home and Contact pages with identical inputs."""
+        home_content = self.client.get(self.urls['home']).content.decode('utf-8')
+        contact_content = self.client.get(self.urls['contact']).content.decode('utf-8')
+
+        for content, page_name in [(home_content, 'Home'), (contact_content, 'Contact')]:
+            self.assertIn('name="website"', content, f"Honeypot missing on {page_name}")
+            self.assertIn('name="name"', content, f"Name input missing on {page_name}")
+            self.assertIn('name="phone"', content, f"Phone input missing on {page_name}")
+            self.assertIn('name="move_type"', content, f"Move type select missing on {page_name}")
+            self.assertIn('name="moving_from"', content, f"Moving from missing on {page_name}")
+            self.assertIn('name="moving_to"', content, f"Moving to missing on {page_name}")
+            self.assertIn('Send request', content, f"Submit CTA missing on {page_name}")
+
+    def test_forbidden_words_absent_across_all_five_pages(self):
+        """Verify unconfirmed claims are not present on any of the 5 pages."""
+        forbidden_phrases = [
+            "regular",
+            "reliable",
+            "trusted",
+            "fast",
+            "experienced",
+            "years",
+            "coimbatore",
+            "guaranteed",
+        ]
+        for name, url in self.urls.items():
+            response = self.client.get(url)
+            content = response.content.decode('utf-8').lower()
+            for phrase in forbidden_phrases:
+                with self.subTest(page=name, phrase=phrase):
+                    self.assertNotIn(phrase, content, f"Forbidden phrase '{phrase}' found on page {name}")
+

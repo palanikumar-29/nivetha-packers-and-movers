@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us | Nivetha Packers and Movers Tiruppur{% endblock %}
+{% block meta_description %}About Nivetha Packers and Movers in Tiruppur. We handle household, office, and vehicle transport to Chennai, Madurai and nearby towns.{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Heading -->
+        <div class="max-w-3xl mb-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-heading leading-tight mb-4">
+                About Nivetha Packers and Movers
+            </h1>
+            <p class="text-lg text-theme-muted leading-relaxed">
+                A moving and transport service based in Tiruppur, Tamil Nadu.
+            </p>
+        </div>
+
+        <!-- Main Narrative Blocks -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 mb-16">
+            <div class="lg:col-span-8 space-y-8 text-theme-body text-base sm:text-lg leading-relaxed">
+                <div class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg space-y-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-theme-heading">Where we operate</h2>
+                    <p>
+                        Nivetha Packers and Movers is based in Tiruppur, Tamil Nadu. We assist individuals, families, and businesses with transport needs across town and to other districts in Tamil Nadu.
+                    </p>
+                    <p>
+                        In addition to local moves in and around Tiruppur, we handle trips to destinations such as Chennai, Madurai, and nearby towns.
+                    </p>
+                </div>
+
+                <div class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg space-y-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-theme-heading">What we move</h2>
+                    <p>
+                        Our work covers three main categories of moves:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-theme-muted pl-2">
+                        <li><strong class="text-theme-heading">Household shifting:</strong> Furniture, kitchen appliances, clothes, and personal belongings.</li>
+                        <li><strong class="text-theme-heading">Office relocation:</strong> Desks, chairs, office equipment, and documents.</li>
+                        <li><strong class="text-theme-heading">Vehicle transport:</strong> Two-wheelers and cars moved safely to your new address.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg space-y-4">
+                    <h2 class="text-xl sm:text-2xl font-bold text-theme-heading">Our approach</h2>
+                    <p>
+                        We coordinate with you on the inventory, confirm the price before the move date, pack items carefully, load them securely onto the vehicle, and deliver them to your destination.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar / Details -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-theme-alt border border-theme-border p-6 rounded-lg space-y-4">
+                    <h2 class="text-xl font-bold text-theme-heading">Service overview</h2>
+                    <dl class="space-y-3 text-sm">
+                        <div>
+                            <dt class="font-semibold text-theme-heading">Base location</dt>
+                            <dd class="text-theme-muted">Tiruppur, Tamil Nadu</dd>
+                        </div>
+                        <div class="pt-2 border-t border-theme-border">
+                            <dt class="font-semibold text-theme-heading">Common routes</dt>
+                            <dd class="text-theme-muted">Chennai, Madurai, nearby towns</dd>
+                        </div>
+                        <div class="pt-2 border-t border-theme-border">
+                            <dt class="font-semibold text-theme-heading">Move types</dt>
+                            <dd class="text-theme-muted">Homes, offices, vehicles</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                {% if BUSINESS_PHONE or BUSINESS_WHATSAPP %}
+                <div class="bg-theme-surface border border-theme-border p-6 rounded-lg space-y-4">
+                    <h2 class="text-lg font-bold text-theme-heading">Get in touch</h2>
+                    <p class="text-sm text-theme-muted">Have a question about a move? Reach out directly.</p>
+                    <div class="space-y-3">
+                        {% if BUSINESS_PHONE %}
+                        <a href="tel:{{ BUSINESS_PHONE }}" class="w-full inline-flex items-center justify-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+                            <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
+                            </svg>
+                            <span>Call our office</span>
+                        </a>
+                        {% endif %}
+
+                        {% if BUSINESS_WHATSAPP %}
+                        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+                            <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
+                            </svg>
+                            <span>WhatsApp</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

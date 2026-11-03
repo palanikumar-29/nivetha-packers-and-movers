@@ -1,0 +1,68 @@
+<form method="post" action="{% url 'core:contact' %}#quote-form" class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg shadow-sm space-y-6" novalidate>
+    {% csrf_token %}
+
+    <!-- Honeypot Field (Spam Protection - Hidden via CSS) -->
+    <div class="hidden" aria-hidden="true">
+        <label for="quote-website">Website</label>
+        <input type="text" name="website" id="quote-website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Name -->
+        <div>
+            <label for="quote-name" class="block text-sm font-semibold text-theme-heading mb-2">Your name *</label>
+            <input type="text" name="name" id="quote-name" required placeholder="Ramesh" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        </div>
+
+        <!-- Phone -->
+        <div>
+            <label for="quote-phone" class="block text-sm font-semibold text-theme-heading mb-2">Phone number *</label>
+            <input type="tel" name="phone" id="quote-phone" required placeholder="10-digit mobile number" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- Move Type -->
+        <div>
+            <label for="quote-move-type" class="block text-sm font-semibold text-theme-heading mb-2">Move type *</label>
+            <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+                <option value="house">House move</option>
+                <option value="office">Office move</option>
+                <option value="vehicle">Vehicle move</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Moving From -->
+        <div>
+            <label for="quote-from" class="block text-sm font-semibold text-theme-heading mb-2">Moving from *</label>
+            <input type="text" name="moving_from" id="quote-from" required placeholder="Tiruppur" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        </div>
+
+        <!-- Moving To -->
+        <div>
+            <label for="quote-to" class="block text-sm font-semibold text-theme-heading mb-2">Moving to *</label>
+            <input type="text" name="moving_to" id="quote-to" required placeholder="Chennai / Madurai" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Preferred Date -->
+        <div>
+            <label for="quote-date" class="block text-sm font-semibold text-theme-heading mb-2">Preferred move date (optional)</label>
+            <input type="date" name="preferred_date" id="quote-date" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        </div>
+
+        <!-- Move Details -->
+        <div>
+            <label for="quote-details" class="block text-sm font-semibold text-theme-heading mb-2">Details (optional)</label>
+            <textarea name="details" id="quote-details" rows="2" placeholder="List of big items, floor number" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-2 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange"></textarea>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-lg px-8 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lorry-orange min-h-[44px]">
+            Send request
+        </button>
+    </div>
+</form>

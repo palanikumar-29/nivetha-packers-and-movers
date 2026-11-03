@@ -47,21 +47,16 @@
             </a>
 
             <!-- Navigation Links & Theme Toggle -->
-            <div class="flex items-center gap-4 sm:gap-6">
-                <nav aria-label="Main navigation" class="hidden md:flex items-center gap-6">
-                    <a href="{% url 'core:home' %}" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Home</a>
-                    <a href="#services" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Services</a>
-                    <a href="#how-it-works" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">How a move works</a>
-                    <a href="#quote-form" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Get a quote</a>
-
-                    {% if BUSINESS_PHONE %}
-                    <a href="tel:{{ BUSINESS_PHONE }}" class="hidden lg:inline-flex items-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                        <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
-                        </svg>
-                        <span>Call us</span>
+            <div class="flex items-center gap-3 sm:gap-4">
+                <nav aria-label="Main navigation" class="hidden md:flex items-center gap-5 lg:gap-6">
+                    <a href="{% url 'core:home' %}" class="text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1 {% if request.resolver_match.url_name == 'home' %}text-lorry-orange font-semibold border-b-2 border-lorry-orange{% else %}text-theme-body hover:text-lorry-orange{% endif %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Home</a>
+                    <a href="{% url 'core:services' %}" class="text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1 {% if request.resolver_match.url_name == 'services' %}text-lorry-orange font-semibold border-b-2 border-lorry-orange{% else %}text-theme-body hover:text-lorry-orange{% endif %}" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a>
+                    <a href="{% url 'core:gallery' %}" class="text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1 {% if request.resolver_match.url_name == 'gallery' %}text-lorry-orange font-semibold border-b-2 border-lorry-orange{% else %}text-theme-body hover:text-lorry-orange{% endif %}" {% if request.resolver_match.url_name == 'gallery' %}aria-current="page"{% endif %}>Gallery</a>
+                    <a href="{% url 'core:about' %}" class="text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1 {% if request.resolver_match.url_name == 'about' %}text-lorry-orange font-semibold border-b-2 border-lorry-orange{% else %}text-theme-body hover:text-lorry-orange{% endif %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
+                    <a href="{% url 'core:contact' %}" class="text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1 {% if request.resolver_match.url_name == 'contact' %}text-lorry-orange font-semibold border-b-2 border-lorry-orange{% else %}text-theme-body hover:text-lorry-orange{% endif %}" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact</a>
+                    <a href="{% url 'core:contact' %}#quote-form" class="inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-sm px-4 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+                        Get a quote
                     </a>
-                    {% endif %}
                 </nav>
 
                 <!-- Theme Toggle Button -->
@@ -75,6 +70,31 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
+
+                <!-- Mobile Menu (Zero-JS <details> dropdown with ≥44px tap targets) -->
+                <details class="md:hidden relative group">
+                    <summary class="list-none inline-flex items-center justify-center w-11 h-11 rounded border border-theme-border text-theme-heading hover:bg-theme-alt transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange cursor-pointer" aria-label="Toggle navigation menu">
+                        <!-- Hamburger icon -->
+                        <svg class="w-6 h-6 group-open:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Close icon -->
+                        <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </summary>
+                    <div class="absolute right-0 top-full mt-2 w-56 bg-theme-surface border border-theme-border rounded-lg shadow-lg py-2 z-50 flex flex-col">
+                        <a href="{% url 'core:home' %}" class="px-4 py-3 min-h-[44px] flex items-center text-base font-medium {% if request.resolver_match.url_name == 'home' %}text-lorry-orange bg-theme-alt font-semibold{% else %}text-theme-body hover:bg-theme-alt{% endif %} focus:outline-none focus:ring-2 focus:ring-lorry-orange" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Home</a>
+                        <a href="{% url 'core:services' %}" class="px-4 py-3 min-h-[44px] flex items-center text-base font-medium {% if request.resolver_match.url_name == 'services' %}text-lorry-orange bg-theme-alt font-semibold{% else %}text-theme-body hover:bg-theme-alt{% endif %} focus:outline-none focus:ring-2 focus:ring-lorry-orange" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a>
+                        <a href="{% url 'core:gallery' %}" class="px-4 py-3 min-h-[44px] flex items-center text-base font-medium {% if request.resolver_match.url_name == 'gallery' %}text-lorry-orange bg-theme-alt font-semibold{% else %}text-theme-body hover:bg-theme-alt{% endif %} focus:outline-none focus:ring-2 focus:ring-lorry-orange" {% if request.resolver_match.url_name == 'gallery' %}aria-current="page"{% endif %}>Gallery</a>
+                        <a href="{% url 'core:about' %}" class="px-4 py-3 min-h-[44px] flex items-center text-base font-medium {% if request.resolver_match.url_name == 'about' %}text-lorry-orange bg-theme-alt font-semibold{% else %}text-theme-body hover:bg-theme-alt{% endif %} focus:outline-none focus:ring-2 focus:ring-lorry-orange" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
+                        <a href="{% url 'core:contact' %}" class="px-4 py-3 min-h-[44px] flex items-center text-base font-medium {% if request.resolver_match.url_name == 'contact' %}text-lorry-orange bg-theme-alt font-semibold{% else %}text-theme-body hover:bg-theme-alt{% endif %} focus:outline-none focus:ring-2 focus:ring-lorry-orange" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact</a>
+                        <div class="border-t border-theme-border my-1"></div>
+                        <a href="{% url 'core:contact' %}#quote-form" class="mx-3 my-2 px-4 py-2 min-h-[44px] inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-sm rounded focus:outline-none focus:ring-2 focus:ring-lorry-orange">
+                            Get a quote
+                        </a>
+                    </div>
+                </details>
             </div>
         </div>
     </header>
@@ -87,12 +107,23 @@
     <!-- Footer -->
     <footer class="bg-theme-footer text-theme-footer-text py-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div class="sm:col-span-2 md:col-span-1">
                     <span class="font-bold text-xl text-white block mb-3">Nivetha Packers and Movers</span>
                     <p class="text-theme-footer-muted text-base leading-relaxed">
                         Household shifting, office relocation, and vehicle transport based in Tiruppur, with trips to Chennai, Madurai, and nearby towns.
                     </p>
+                </div>
+
+                <div>
+                    <span class="font-semibold text-lg text-white block mb-3">Pages</span>
+                    <ul class="space-y-2 text-theme-footer-muted text-base">
+                        <li><a href="{% url 'core:home' %}" class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded px-1">Home</a></li>
+                        <li><a href="{% url 'core:services' %}" class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded px-1">Services</a></li>
+                        <li><a href="{% url 'core:gallery' %}" class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded px-1">Gallery</a></li>
+                        <li><a href="{% url 'core:about' %}" class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded px-1">About</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded px-1">Contact</a></li>
+                    </ul>
                 </div>
 
                 <div>
@@ -124,7 +155,7 @@
                             </a>
                         </p>
                         {% endif %}
-                        <p>Location: Tiruppur, Tamil Nadu</p>
+                        <p>Address: {{ BUSINESS_ADDRESS }}</p>
                     </div>
                 </div>
             </div>
@@ -148,7 +179,7 @@
         {% endif %}
 
         {% if BUSINESS_WHATSAPP %}
-        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-lorry-orange hover:bg-[#e05e13] text-lorry-dark font-semibold text-base py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-base py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
             <svg class="w-5 h-5 text-lorry-dark" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
             </svg>

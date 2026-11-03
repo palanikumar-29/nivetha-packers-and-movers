@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | Nivetha Packers and Movers Tiruppur{% endblock %}
+{% block meta_description %}Contact Nivetha Packers and Movers in Tiruppur. Call, message on WhatsApp, or send a quote request for moves to Chennai, Madurai and nearby towns.{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Heading -->
+        <div class="max-w-3xl mb-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-heading leading-tight mb-4">
+                Contact Nivetha Packers and Movers
+            </h1>
+            <p class="text-lg text-theme-muted leading-relaxed">
+                Get in touch for moving goods within Tiruppur or for trips to Chennai, Madurai and nearby towns. Call, message on WhatsApp, or send your move details below.
+            </p>
+        </div>
+
+        <!-- 2-Column Contact Info and Quote Form -->
+        <div id="quote-form" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <!-- Left Column: Contact details and direct communication channels -->
+            <div class="lg:col-span-5 space-y-8">
+                <div class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg space-y-6 shadow-sm">
+                    <h2 class="text-2xl font-bold text-theme-heading">Direct contact</h2>
+                    
+                    <div class="space-y-4">
+                        {% if BUSINESS_PHONE %}
+                        <div>
+                            <span class="block text-sm font-semibold text-theme-muted mb-1">Phone</span>
+                            <a href="tel:{{ BUSINESS_PHONE }}" class="inline-flex items-center gap-2 text-theme-heading hover:text-lorry-orange font-semibold text-lg transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded min-h-[44px]">
+                                <svg class="w-5 h-5 text-lorry-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
+                                </svg>
+                                <span>Call our office</span>
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        {% if BUSINESS_WHATSAPP %}
+                        <div class="pt-4 border-t border-theme-border">
+                            <span class="block text-sm font-semibold text-theme-muted mb-1">WhatsApp</span>
+                            <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-theme-heading hover:text-lorry-orange font-semibold text-lg transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded min-h-[44px]">
+                                <svg class="w-5 h-5 text-lorry-orange flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
+                                </svg>
+                                <span>Message on WhatsApp</span>
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <div class="pt-4 border-t border-theme-border">
+                            <span class="block text-sm font-semibold text-theme-muted mb-1">Office address</span>
+                            <p class="text-theme-body text-base">{{ BUSINESS_ADDRESS }}</p>
+                        </div>
+
+                        <div class="pt-4 border-t border-theme-border">
+                            <span class="block text-sm font-semibold text-theme-muted mb-1">Service area</span>
+                            <p class="text-theme-body text-base">Tiruppur, Chennai, Madurai and nearby towns in Tamil Nadu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Quote Form Partial -->
+            <div class="lg:col-span-7">
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold text-theme-heading">Send a quote request</h2>
+                    <p class="text-theme-muted text-base">Fill out the details below and we will contact you with the price.</p>
+                </div>
+                {% include 'partials/quote_form.html' %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -5,5 +5,6 @@ def business_contact(request):
     return {
         'BUSINESS_PHONE': getattr(settings, 'BUSINESS_PHONE', ''),
         'BUSINESS_WHATSAPP': getattr(settings, 'BUSINESS_WHATSAPP', ''),
+        'BUSINESS_ADDRESS': getattr(settings, 'BUSINESS_ADDRESS', 'Tiruppur, Tamil Nadu'),
     }
 

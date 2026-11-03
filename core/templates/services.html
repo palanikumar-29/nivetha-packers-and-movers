@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Moving Services in Tiruppur | Nivetha Movers{% endblock %}
+{% block meta_description %}Household shifting, office relocation, and vehicle transport services in Tiruppur, with trips to Chennai, Madurai and nearby towns.{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Heading -->
+        <div class="max-w-3xl mb-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-heading leading-tight mb-4">
+                Moving services in Tiruppur
+            </h1>
+            <p class="text-lg text-theme-muted leading-relaxed">
+                We handle household shifting, office moves, and vehicle transport based in Tiruppur, with trips to Chennai, Madurai and nearby towns.
+            </p>
+        </div>
+
+        <!-- Ruled Services List -->
+        <div class="border-t border-b border-theme-border divide-y divide-theme-border mb-12">
+            {% if services %}
+                {% for service in services %}
+                <div class="py-8 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12">
+                    <div class="md:w-1/3">
+                        <span class="text-sm font-semibold text-theme-muted mr-3">{{ forloop.counter }}.</span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-theme-heading inline md:block">{{ service.title }}</h2>
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-theme-body text-base sm:text-lg leading-relaxed">{{ service.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="py-12 text-center">
+                    <p class="text-theme-muted text-base sm:text-lg">
+                        We will list our services here shortly. For any move, please call us directly or send a quote request.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-theme-alt border border-theme-border p-8 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <h2 class="text-2xl font-bold text-theme-heading mb-2">Need a price estimate for your move?</h2>
+                <p class="text-theme-muted text-base">Tell us your items and destination for a clear quote.</p>
+            </div>
+            <a href="{% url 'core:contact' %}#quote-form" class="inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-base px-6 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lorry-orange min-h-[44px] whitespace-nowrap">
+                Get a quote
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
