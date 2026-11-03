@@ -65,9 +65,13 @@ Download the appropriate binary for your OS into the project `bin/` directory:
   mkdir bin -Force
   Invoke-WebRequest -Uri "https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.17/tailwindcss-windows-x64.exe" -OutFile "bin/tailwindcss.exe"
   ```
-  Watch or build styles:
+  Watch and auto-recompile styles during development:
   ```powershell
   .\bin\tailwindcss.exe -i static/css/input.css -o static/css/output.css --watch
+  ```
+  Or perform a one-time minified production build:
+  ```powershell
+  .\bin\tailwindcss.exe -i static/css/input.css -o static/css/output.css --minify
   ```
 
 - **macOS (Apple Silicon / ARM64):**

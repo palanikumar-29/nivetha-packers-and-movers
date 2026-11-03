@@ -2,3 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-bg-page: #FFFFFF;
+    --color-bg-alt: #F4F6F8;
+    --color-bg-surface: #FFFFFF;
+    --color-text-heading: #16325C;
+    --color-text-body: #1F2933;
+    --color-text-muted: #52606D;
+    --color-border: #D9E0E6;
+    --color-bg-header: #FFFFFF;
+    --color-bg-footer: #16325C;
+    --color-text-footer: #F3F5F2;
+    --color-text-footer-muted: #A9B6C6;
+    --color-lorry-orange: #F26B1D;
+    --color-lorry-orange-text: #1F2933;
+    --color-route-green: #0B6B3A;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-bg-page: #0F1B2D;
+      --color-bg-alt: #16263C;
+      --color-bg-surface: #16263C;
+      --color-text-heading: #FFFFFF;
+      --color-text-body: #E8EDF3;
+      --color-text-muted: #A9B6C6;
+      --color-border: #2B3E57;
+      --color-bg-header: #0B1524;
+      --color-bg-footer: #0B1524;
+      --color-text-footer: #E8EDF3;
+      --color-text-footer-muted: #A9B6C6;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --color-bg-page: #0F1B2D;
+    --color-bg-alt: #16263C;
+    --color-bg-surface: #16263C;
+    --color-text-heading: #FFFFFF;
+    --color-text-body: #E8EDF3;
+    --color-text-muted: #A9B6C6;
+    --color-border: #2B3E57;
+    --color-bg-header: #0B1524;
+    --color-bg-footer: #0B1524;
+    --color-text-footer: #E8EDF3;
+    --color-text-footer-muted: #A9B6C6;
+  }
+
+  :root[data-theme="light"] {
+    --color-bg-page: #FFFFFF;
+    --color-bg-alt: #F4F6F8;
+    --color-bg-surface: #FFFFFF;
+    --color-text-heading: #16325C;
+    --color-text-body: #1F2933;
+    --color-text-muted: #52606D;
+    --color-border: #D9E0E6;
+    --color-bg-header: #FFFFFF;
+    --color-bg-footer: #16325C;
+    --color-text-footer: #F3F5F2;
+    --color-text-footer-muted: #A9B6C6;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--color-bg-page);
+    color: var(--color-text-body);
+    font-family: 'Hind Madurai', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+}

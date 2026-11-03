@@ -1,19 +1,13 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Service
 
 
-def placeholder_home(request):
-    """Placeholder view for Story 1.1 ensuring HTTP 200 response."""
-    return HttpResponse(
-        '<!DOCTYPE html>'
-        '<html lang="en">'
-        '<head>'
-        '    <meta charset="UTF-8">'
-        '    <title>Nivetha Packers and Movers</title>'
-        '</head>'
-        '<body style="font-family: sans-serif; background: #1e2124; color: #ffffff; padding: 2rem;">'
-        '    <h1>Nivetha Packers and Movers</h1>'
-        '    <p>Django project foundation and data models initialized successfully.</p>'
-        '</body>'
-        '</html>'
-    )
-
+def home(request):
+    """
+    Home page view displaying hero, road-sign route board, services summary,
+    how a move works steps, and the quote request form markup.
+    """
+    services = Service.objects.filter(is_active=True).order_by('order', 'id')
+    return render(request, 'home.html', {
+        'services': services,
+    })

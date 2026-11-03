@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>{% block title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Packers and movers in Tiruppur for household goods, office items and vehicles. Trips to Chennai, Madurai and nearby towns. Request a quote.{% endblock %}">
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+
+    <!-- Pre-paint Theme Script (Prevents flash, < 1 KB) -->
+    <script>
+    (function() {
+        try {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'light' || saved === 'dark') {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        } catch (e) {}
+    })();
+    </script>
+
+    <!-- Google Font: Hind Madurai -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-theme-page text-theme-body font-sans antialiased min-h-screen flex flex-col selection:bg-lorry-orange selection:text-lorry-dark">
+
+    <!-- Accessible Skip Link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-lorry-orange focus:text-lorry-dark focus:px-4 focus:py-2 focus:font-semibold focus:rounded focus:outline-none focus:ring-2 focus:ring-white">
+        Skip to main content
+    </a>
+
+    <!-- Primary Header & Navigation -->
+    <header class="border-b border-theme-border bg-theme-header sticky top-0 z-30 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- Plain Wordmark -->
+            <a href="{% url 'core:home' %}" class="flex flex-col group focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded p-1">
+                <span class="font-bold text-xl sm:text-2xl text-theme-heading transition-colors">Nivetha Packers and Movers</span>
+                <span class="text-xs text-theme-muted">Tiruppur, Tamil Nadu</span>
+            </a>
+
+            <!-- Navigation Links & Theme Toggle -->
+            <div class="flex items-center gap-4 sm:gap-6">
+                <nav aria-label="Main navigation" class="hidden md:flex items-center gap-6">
+                    <a href="{% url 'core:home' %}" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Home</a>
+                    <a href="#services" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Services</a>
+                    <a href="#how-it-works" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">How a move works</a>
+                    <a href="#quote-form" class="text-base font-medium text-theme-body hover:text-lorry-orange transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange rounded px-1">Get a quote</a>
+
+                    {% if BUSINESS_PHONE %}
+                    <a href="tel:{{ BUSINESS_PHONE }}" class="hidden lg:inline-flex items-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+                        <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
+                        </svg>
+                        <span>Call us</span>
+                    </a>
+                    {% endif %}
+                </nav>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded border border-theme-border text-theme-heading hover:bg-theme-alt transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange" aria-label="Toggle theme" aria-pressed="false">
+                    <!-- Sun icon (visible in dark mode) -->
+                    <svg id="theme-icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon icon (visible in light mode) -->
+                    <svg id="theme-icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pb-24 md:pb-16">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-theme-footer text-theme-footer-text py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <span class="font-bold text-xl text-white block mb-3">Nivetha Packers and Movers</span>
+                    <p class="text-theme-footer-muted text-base leading-relaxed">
+                        Household shifting, office relocation, and vehicle transport based in Tiruppur, with trips to Chennai, Madurai, and nearby towns.
+                    </p>
+                </div>
+
+                <div>
+                    <span class="font-semibold text-lg text-white block mb-3">Service destinations</span>
+                    <ul class="space-y-2 text-theme-footer-muted text-base">
+                        <li>Tiruppur local moves</li>
+                        <li>Chennai trips</li>
+                        <li>Madurai trips</li>
+                        <li>Nearby towns and districts</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="font-semibold text-lg text-white block mb-3">Contact details</span>
+                    <div class="space-y-2 text-theme-footer-muted text-base">
+                        {% if BUSINESS_PHONE %}
+                        <p>
+                            <span>Phone: </span>
+                            <a href="tel:{{ BUSINESS_PHONE }}" class="text-white hover:text-lorry-orange underline transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded">
+                                Call our office
+                            </a>
+                        </p>
+                        {% endif %}
+                        {% if BUSINESS_WHATSAPP %}
+                        <p>
+                            <span>WhatsApp: </span>
+                            <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-lorry-orange underline transition-colors focus:outline-none focus:ring-1 focus:ring-lorry-orange rounded">
+                                Message on WhatsApp
+                            </a>
+                        </p>
+                        {% endif %}
+                        <p>Location: Tiruppur, Tamil Nadu</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-theme-footer-muted">
+                <p>© {% now "Y" %} Nivetha Packers and Movers. All rights reserved.</p>
+                <p>Tiruppur • Chennai • Madurai</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Mobile Contact Bar (Visible only on mobile <= 768px) -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-theme-surface/95 border-t border-theme-border backdrop-blur-md p-3 md:hidden flex gap-3 shadow-lg" aria-label="Mobile contact actions">
+        {% if BUSINESS_PHONE %}
+        <a href="tel:{{ BUSINESS_PHONE }}" class="flex-1 inline-flex items-center justify-center gap-2 bg-route-green hover:bg-emerald-800 text-white font-semibold text-base py-3 px-4 rounded border border-white/20 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
+            </svg>
+            <span>Call us</span>
+        </a>
+        {% endif %}
+
+        {% if BUSINESS_WHATSAPP %}
+        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 bg-lorry-orange hover:bg-[#e05e13] text-lorry-dark font-semibold text-base py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <svg class="w-5 h-5 text-lorry-dark" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
+            </svg>
+            <span>WhatsApp</span>
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- Theme Toggle Client Script (< 1 KB) -->
+    <script>
+    (function() {
+        var btn = document.getElementById('theme-toggle');
+        var sun = document.getElementById('theme-icon-sun');
+        var moon = document.getElementById('theme-icon-moon');
+        if (!btn) return;
+
+        function getEffectiveTheme() {
+            var explicit = document.documentElement.getAttribute('data-theme');
+            if (explicit === 'light' || explicit === 'dark') return explicit;
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+
+        function syncUI() {
+            var current = getEffectiveTheme();
+            var isDark = current === 'dark';
+            btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+            if (sun && moon) {
+                if (isDark) {
+                    sun.classList.remove('hidden');
+                    moon.classList.add('hidden');
+                } else {
+                    sun.classList.add('hidden');
+                    moon.classList.remove('hidden');
+                }
+            }
+        }
+
+        btn.addEventListener('click', function() {
+            var next = getEffectiveTheme() === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try {
+                localStorage.setItem('theme', next);
+            } catch (e) {}
+            syncUI();
+        });
+
+        syncUI();
+    })();
+    </script>
+</body>
+</html>
