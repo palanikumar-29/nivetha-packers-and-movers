@@ -32,6 +32,8 @@ staticfiles/
 
 # Environment secrets
 .env
+.env.example
+.env*
 
 # Tailwind standalone binary
 bin/
