@@ -45,8 +45,8 @@ class QuoteRequest(models.Model):
     status_updated_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = 'Quote Request'
-        verbose_name_plural = 'Quote Requests'
+        verbose_name = 'Enquiry'
+        verbose_name_plural = 'Enquiries'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -82,8 +82,8 @@ class GalleryImage(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = 'Gallery Image'
-        verbose_name_plural = 'Gallery Images'
+        verbose_name = 'Gallery image'
+        verbose_name_plural = 'Gallery'
         ordering = ['order', 'id']
 
     def __str__(self):
