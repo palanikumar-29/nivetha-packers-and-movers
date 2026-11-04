@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Service, GalleryImage
 from .forms import QuoteForm
+from .channels import dispatch
 
 
 def home(request):
@@ -17,7 +18,8 @@ def home(request):
         if form.is_valid():
             is_spam = bool(form.cleaned_data.get('website'))
             if not is_spam:
-                form.save()
+                enquiry = form.save()
+                dispatch(enquiry)
             return redirect(f"{reverse('core:home')}?submitted=1#quote-form")
     else:
         form = QuoteForm()
@@ -69,7 +71,8 @@ def contact(request):
         if form.is_valid():
             is_spam = bool(form.cleaned_data.get('website'))
             if not is_spam:
-                form.save()
+                enquiry = form.save()
+                dispatch(enquiry)
             return redirect(f"{reverse('core:contact')}?submitted=1#quote-form")
     else:
         form = QuoteForm()
