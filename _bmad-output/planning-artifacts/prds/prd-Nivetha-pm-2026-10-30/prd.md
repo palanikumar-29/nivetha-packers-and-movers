@@ -11,7 +11,7 @@ updated: 2026-10-30 (rev 1 — notification model, cloud storage, phone vars, ho
 
 This PRD is for the PM, the architect (Winston), and the developer (Amelia). It covers a five-page marketing and lead-capture website for a small packers-and-movers business in Tiruppur, Tamil Nadu. The tech stack is fixed (Django + Tailwind + PostgreSQL/Neon + Render). Scope is intentionally tight — two goals, five pages, eight stories, no enterprise features. This document's vocabulary is anchored in §3 Glossary; all downstream artifacts must use those terms verbatim.
 
----
+--- 
 
 ## 1. Vision
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found | Nivetha Movers{% endblock %}
+{% block meta_robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+
+{% block content %}
+<section class="py-16 md:py-24 text-center">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <h1 class="text-4xl sm:text-5xl font-bold text-theme-heading">404 - Page Not Found</h1>
+        <p class="text-theme-muted text-lg">
+            The page you are looking for does not exist or has been moved.
+        </p>
+        <div class="pt-4">
+            <a href="{% url 'core:home' %}" class="inline-flex items-center justify-center px-6 py-3 font-semibold rounded bg-lorry-orange text-lorry-dark hover:bg-lorry-orange-hover transition-colors">
+                Return to Home
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

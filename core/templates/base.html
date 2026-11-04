@@ -8,6 +8,23 @@
     <title>{% block title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Packers and movers in Tiruppur for household goods, office items and vehicles. Trips to Chennai, Madurai and nearby towns. Request a quote.{% endblock %}">
     <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    {% block meta_robots %}{% endblock %}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Packers and movers in Tiruppur for household goods, office items and vehicles. Trips to Chennai, Madurai and nearby towns. Request a quote.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% block twitter_title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Packers and movers in Tiruppur for household goods, office items and vehicles. Trips to Chennai, Madurai and nearby towns. Request a quote.{% endblock %}">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {{ schema_json|safe }}
+    </script>
 
     <!-- Pre-paint Theme Script (Prevents flash, < 1 KB) -->
     <script>

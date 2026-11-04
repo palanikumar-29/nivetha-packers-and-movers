@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'core.apps.CoreConfig',
 ]
 
@@ -55,6 +56,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.business_contact',
+                'core.context_processors.seo_context',
             ],
         },
     },
@@ -129,4 +131,8 @@ BUSINESS_WHATSAPP = config('BUSINESS_WHATSAPP', default='')
 BUSINESS_ADDRESS = config('BUSINESS_ADDRESS', default='Tiruppur, Tamil Nadu')
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
 TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
+
+# Site & Admin URLs for SEO (sitemap.xml and robots.txt)
+SITE_URL = config('SITE_URL', default='http://localhost:8000')
+ADMIN_URL = config('ADMIN_URL', default='panel')
 
