@@ -1,12 +1,14 @@
 import re
 import tempfile
 import shutil
+from datetime import timedelta
 from pathlib import Path
 from django.test import TestCase, Client, override_settings
 from django.conf import settings
 from django.urls import reverse
+from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
-from core.models import Service, GalleryImage
+from core.models import Service, GalleryImage, QuoteRequest
 
 
 class HomePageViewTest(TestCase):
@@ -569,4 +571,115 @@ class CrossPageSiteTest(TestCase):
             for phrase in forbidden_phrases:
                 with self.subTest(page=name, phrase=phrase):
                     self.assertNotIn(phrase, content, f"Forbidden phrase '{phrase}' found on page {name}")
+
+
+class QuoteFormSubmissionViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.contact_url = reverse('core:contact')
+        self.home_url = reverse('core:home')
+        self.future_date = (timezone.localdate() + timedelta(days=5)).isoformat()
+        self.valid_payload = {
+            'name': 'Ramesh Kumar',
+            'phone': '9876543210',
+            'move_type': 'house',
+            'moving_from': 'Tiruppur',
+            'moving_to': 'Chennai',
+            'preferred_date': self.future_date,
+            'details': 'Household shifting 2 BHK',
+            'website': '',
+        }
+
+    def test_valid_submission_on_contact_creates_enquiry_and_redirects(self):
+        """Verify valid submission on /contact/ creates QuoteRequest with status=New and redirects."""
+        response = self.client.post(self.contact_url, data=self.valid_payload)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('?submitted=1#quote-form', response.url)
+
+        self.assertEqual(QuoteRequest.objects.count(), 1)
+        enquiry = QuoteRequest.objects.first()
+        self.assertEqual(enquiry.name, 'Ramesh Kumar')
+        self.assertEqual(enquiry.phone, '9876543210')
+        self.assertEqual(enquiry.status, 'New')
+
+        follow_res = self.client.get(response.url)
+        self.assertEqual(follow_res.status_code, 200)
+        self.assertIn("Thank you! Your quote request has been sent.", follow_res.content.decode('utf-8'))
+
+    def test_valid_submission_on_home_creates_enquiry_and_redirects(self):
+        """Verify valid submission on / creates QuoteRequest with status=New and redirects."""
+        response = self.client.post(self.home_url, data=self.valid_payload)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('?submitted=1#quote-form', response.url)
+
+        self.assertEqual(QuoteRequest.objects.count(), 1)
+        enquiry = QuoteRequest.objects.first()
+        self.assertEqual(enquiry.name, 'Ramesh Kumar')
+        self.assertEqual(enquiry.status, 'New')
+
+        follow_res = self.client.get(response.url)
+        self.assertEqual(follow_res.status_code, 200)
+        self.assertIn("Thank you! Your quote request has been sent.", follow_res.content.decode('utf-8'))
+
+    def test_invalid_phone_rerenders_form_with_inline_error_and_zero_enquiries(self):
+        """Verify bad phone (8 digits) re-renders form with inline error and creates zero enquiries."""
+        bad_payload = dict(self.valid_payload)
+        bad_payload['phone'] = '98765432'  # Only 8 digits
+
+        response = self.client.post(self.contact_url, data=bad_payload)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(QuoteRequest.objects.count(), 0)
+
+        content = response.content.decode('utf-8')
+        self.assertIn("Phone number must be a 10-digit Indian mobile number", content)
+        self.assertIn('value="Ramesh Kumar"', content)
+
+    def test_past_preferred_date_rerenders_form_with_inline_error_and_zero_enquiries(self):
+        """Verify past move date re-renders form with inline error and creates zero enquiries."""
+        past_date = (timezone.localdate() - timedelta(days=2)).isoformat()
+        bad_payload = dict(self.valid_payload)
+        bad_payload['preferred_date'] = past_date
+
+        response = self.client.post(self.contact_url, data=bad_payload)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(QuoteRequest.objects.count(), 0)
+
+        content = response.content.decode('utf-8')
+        self.assertIn("Preferred move date must be today or a future date.", content)
+
+    def test_missing_required_fields_rerenders_form_with_inline_errors_and_zero_enquiries(self):
+        """Verify missing required fields re-render form with inline errors and create zero enquiries."""
+        incomplete_payload = {
+            'name': 'Priya',
+            'phone': '',
+            'move_type': '',
+            'moving_from': '',
+            'moving_to': '',
+        }
+        response = self.client.post(self.contact_url, data=incomplete_payload)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(QuoteRequest.objects.count(), 0)
+
+        content = response.content.decode('utf-8')
+        self.assertIn("This field is required.", content)
+
+    def test_honeypot_bot_submission_returns_fake_success_with_zero_enquiries(self):
+        """Verify bot submission with non-empty honeypot returns fake success and creates zero enquiries."""
+        spam_payload = dict(self.valid_payload)
+        spam_payload['website'] = 'https://automated-spam-attack.com'
+
+        response = self.client.post(self.contact_url, data=spam_payload)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(QuoteRequest.objects.count(), 0)
+
+        follow_res = self.client.get(response.url)
+        self.assertEqual(follow_res.status_code, 200)
+        self.assertIn("Thank you! Your quote request has been sent.", follow_res.content.decode('utf-8'))
+
+    def test_csrf_protection_enforced_on_quote_form_post(self):
+        """Verify POST without CSRF token returns HTTP 403 Forbidden when CSRF checks are enforced."""
+        csrf_client = Client(enforce_csrf_checks=True)
+        response = csrf_client.post(self.contact_url, data=self.valid_payload)
+        self.assertEqual(response.status_code, 403)
+
 

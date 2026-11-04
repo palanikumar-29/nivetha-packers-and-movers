@@ -1,15 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import Service, GalleryImage
+from .forms import QuoteForm
 
 
 def home(request):
     """
     Home page view displaying hero, road-sign route board, services summary,
-    how a move works steps, and the quote request form markup.
+    how a move works steps, and the quote request form.
     """
-    services = Service.objects.filter(is_active=True).order_by('order', 'id')
+    submitted = request.GET.get('submitted') == '1'
+    services_list = Service.objects.filter(is_active=True).order_by('order', 'id')
+
+    if request.method == 'POST':
+        form = QuoteForm(request.POST)
+        if form.is_valid():
+            is_spam = bool(form.cleaned_data.get('website'))
+            if not is_spam:
+                form.save()
+            return redirect(f"{reverse('core:home')}?submitted=1#quote-form")
+    else:
+        form = QuoteForm()
+
     return render(request, 'home.html', {
-        'services': services,
+        'services': services_list,
+        'form': form,
+        'submitted': submitted,
     })
 
 
@@ -44,6 +60,21 @@ def about(request):
 
 def contact(request):
     """
-    Contact page view with phone, WhatsApp, address, and quote form markup.
+    Contact page view with phone, WhatsApp, address, and quote form submission handler.
     """
-    return render(request, 'contact.html')
+    submitted = request.GET.get('submitted') == '1'
+
+    if request.method == 'POST':
+        form = QuoteForm(request.POST)
+        if form.is_valid():
+            is_spam = bool(form.cleaned_data.get('website'))
+            if not is_spam:
+                form.save()
+            return redirect(f"{reverse('core:contact')}?submitted=1#quote-form")
+    else:
+        form = QuoteForm()
+
+    return render(request, 'contact.html', {
+        'form': form,
+        'submitted': submitted,
+    })

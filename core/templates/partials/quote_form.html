@@ -1,23 +1,49 @@
+{% if submitted %}
+<div class="bg-route-green/10 border-2 border-route-green p-6 rounded-lg mb-6 shadow-sm" role="alert" aria-live="polite">
+    <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-route-green flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <div>
+            <h3 class="text-xl font-bold text-theme-heading">Thank you! Your quote request has been sent.</h3>
+            <p class="text-theme-body text-base mt-1">We will review your move details and get in touch shortly with the price estimate.</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if form.non_field_errors %}
+<div class="bg-red-500/10 border border-red-500 p-4 rounded-lg text-red-600 text-sm mb-6" role="alert">
+    {{ form.non_field_errors }}
+</div>
+{% endif %}
+
 <form method="post" action="{% url 'core:contact' %}#quote-form" class="bg-theme-surface border border-theme-border p-6 sm:p-8 rounded-lg shadow-sm space-y-6" novalidate>
     {% csrf_token %}
 
     <!-- Honeypot Field (Spam Protection - Hidden via CSS) -->
     <div class="hidden" aria-hidden="true">
         <label for="quote-website">Website</label>
-        <input type="text" name="website" id="quote-website" tabindex="-1" autocomplete="off">
+        <input type="text" name="website" id="quote-website" tabindex="-1" autocomplete="off" value="">
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <!-- Name -->
         <div>
             <label for="quote-name" class="block text-sm font-semibold text-theme-heading mb-2">Your name *</label>
-            <input type="text" name="name" id="quote-name" required placeholder="Ramesh" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <input type="text" name="name" id="quote-name" required value="{{ form.name.value|default:'' }}" placeholder="Ramesh" class="w-full bg-theme-surface border {% if form.name.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.name.errors %}aria-invalid="true" aria-describedby="quote-name-error"{% endif %}>
+            {% if form.name.errors %}
+            <p id="quote-name-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.name.errors.0 }}</p>
+            {% endif %}
         </div>
 
         <!-- Phone -->
         <div>
             <label for="quote-phone" class="block text-sm font-semibold text-theme-heading mb-2">Phone number *</label>
-            <input type="tel" name="phone" id="quote-phone" required placeholder="10-digit mobile number" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <input type="tel" name="phone" id="quote-phone" required value="{{ form.phone.value|default:'' }}" placeholder="10-digit mobile number" class="w-full bg-theme-surface border {% if form.phone.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.phone.errors %}aria-invalid="true" aria-describedby="quote-phone-error"{% endif %}>
+            {% if form.phone.errors %}
+            <p id="quote-phone-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.phone.errors.0 }}</p>
+            {% endif %}
         </div>
     </div>
 
@@ -25,24 +51,33 @@
         <!-- Move Type -->
         <div>
             <label for="quote-move-type" class="block text-sm font-semibold text-theme-heading mb-2">Move type *</label>
-            <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                <option value="house">House move</option>
-                <option value="office">Office move</option>
-                <option value="vehicle">Vehicle move</option>
-                <option value="other">Other</option>
+            <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border {% if form.move_type.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.move_type.errors %}aria-invalid="true" aria-describedby="quote-move-type-error"{% endif %}>
+                <option value="house" {% if form.move_type.value == 'house' or not form.move_type.value %}selected{% endif %}>House move</option>
+                <option value="office" {% if form.move_type.value == 'office' %}selected{% endif %}>Office move</option>
+                <option value="vehicle" {% if form.move_type.value == 'vehicle' %}selected{% endif %}>Vehicle move</option>
+                <option value="other" {% if form.move_type.value == 'other' %}selected{% endif %}>Other</option>
             </select>
+            {% if form.move_type.errors %}
+            <p id="quote-move-type-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.move_type.errors.0 }}</p>
+            {% endif %}
         </div>
 
         <!-- Moving From -->
         <div>
             <label for="quote-from" class="block text-sm font-semibold text-theme-heading mb-2">Moving from *</label>
-            <input type="text" name="moving_from" id="quote-from" required placeholder="Tiruppur" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <input type="text" name="moving_from" id="quote-from" required value="{{ form.moving_from.value|default:'' }}" placeholder="Tiruppur" class="w-full bg-theme-surface border {% if form.moving_from.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_from.errors %}aria-invalid="true" aria-describedby="quote-from-error"{% endif %}>
+            {% if form.moving_from.errors %}
+            <p id="quote-from-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_from.errors.0 }}</p>
+            {% endif %}
         </div>
 
         <!-- Moving To -->
         <div>
             <label for="quote-to" class="block text-sm font-semibold text-theme-heading mb-2">Moving to *</label>
-            <input type="text" name="moving_to" id="quote-to" required placeholder="Chennai / Madurai" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <input type="text" name="moving_to" id="quote-to" required value="{{ form.moving_to.value|default:'' }}" placeholder="Chennai / Madurai" class="w-full bg-theme-surface border {% if form.moving_to.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_to.errors %}aria-invalid="true" aria-describedby="quote-to-error"{% endif %}>
+            {% if form.moving_to.errors %}
+            <p id="quote-to-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_to.errors.0 }}</p>
+            {% endif %}
         </div>
     </div>
 
@@ -50,13 +85,19 @@
         <!-- Preferred Date -->
         <div>
             <label for="quote-date" class="block text-sm font-semibold text-theme-heading mb-2">Preferred move date (optional)</label>
-            <input type="date" name="preferred_date" id="quote-date" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
+            <input type="date" name="preferred_date" id="quote-date" value="{% if form.preferred_date.value %}{{ form.preferred_date.value|date:'Y-m-d'|default:form.preferred_date.value }}{% endif %}" class="w-full bg-theme-surface border {% if form.preferred_date.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.preferred_date.errors %}aria-invalid="true" aria-describedby="quote-date-error"{% endif %}>
+            {% if form.preferred_date.errors %}
+            <p id="quote-date-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.preferred_date.errors.0 }}</p>
+            {% endif %}
         </div>
 
         <!-- Move Details -->
         <div>
             <label for="quote-details" class="block text-sm font-semibold text-theme-heading mb-2">Details (optional)</label>
-            <textarea name="details" id="quote-details" rows="2" placeholder="List of big items, floor number" class="w-full bg-theme-surface border border-theme-border rounded px-4 py-2 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 focus:ring-lorry-orange"></textarea>
+            <textarea name="details" id="quote-details" rows="2" placeholder="List of big items, floor number" class="w-full bg-theme-surface border {% if form.details.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-2 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2" {% if form.details.errors %}aria-invalid="true" aria-describedby="quote-details-error"{% endif %}>{{ form.details.value|default:'' }}</textarea>
+            {% if form.details.errors %}
+            <p id="quote-details-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.details.errors.0 }}</p>
+            {% endif %}
         </div>
     </div>
 
