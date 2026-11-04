@@ -1,6 +1,7 @@
 """
 Base settings for nivetha_pm project.
 """
+import os
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
@@ -25,7 +26,29 @@ INSTALLED_APPS = [
 ]
 
 USE_CLOUDINARY = config('USE_CLOUDINARY', default=False, cast=bool)
+CLOUDINARY_URL = config('CLOUDINARY_URL', default='').strip()
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'placeholder',
+    'API_KEY': 'placeholder',
+    'API_SECRET': 'placeholder',
+    'PREFIX': 'nivetha/',
+}
+
 if USE_CLOUDINARY:
+    if not CLOUDINARY_URL:
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured("CLOUDINARY_URL must be set when USE_CLOUDINARY=True.")
+    os.environ['CLOUDINARY_URL'] = CLOUDINARY_URL
+    import cloudinary
+    import urllib.parse
+    parsed = urllib.parse.urlparse(CLOUDINARY_URL)
+    CLOUDINARY_STORAGE.update({
+        'CLOUD_NAME': parsed.hostname or '',
+        'API_KEY': parsed.username or '',
+        'API_SECRET': parsed.password or '',
+    })
+    cloudinary.reset_config()
     INSTALLED_APPS += [
         'cloudinary_storage',
         'cloudinary',

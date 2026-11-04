@@ -89,3 +89,16 @@ class GalleryImage(models.Model):
     def __str__(self):
         return self.caption
 
+    @property
+    def optimized_url(self):
+        """
+        Return the image URL with automatic format, quality, and width limiting
+        when hosted on Cloudinary, or raw URL for local storage.
+        """
+        if not self.image:
+            return ''
+        url = self.image.url
+        if 'res.cloudinary.com' in url and '/upload/' in url:
+            return url.replace('/upload/', '/upload/f_auto,q_auto,w_1600,c_limit/', 1)
+        return url
+

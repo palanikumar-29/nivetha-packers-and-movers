@@ -2,6 +2,7 @@ import urllib.parse
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import QuoteRequest, EnquiryStatus, Service, GalleryImage
+from .forms import GalleryImageAdminForm
 
 
 @admin.register(QuoteRequest)
@@ -94,6 +95,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
+    form = GalleryImageAdminForm
     list_display = ('caption', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('caption',)

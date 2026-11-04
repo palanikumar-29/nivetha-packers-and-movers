@@ -151,5 +151,22 @@ All tests use an in-memory SQLite database and require no external services.
 | `TELEGRAM_BOT_TOKEN` | (Optional) Telegram bot token |
 | `TELEGRAM_CHAT_ID` | (Optional) Telegram chat ID |
 
-> **Note on Staging Storage:** On Render free-tier staging with `USE_CLOUDINARY=False`, files uploaded to local disk will be erased when the container restarts due to Render's ephemeral filesystem. Production must set `USE_CLOUDINARY=True` with Cloudinary credentials.
+---
+
+## Cloudinary Media Storage Setup
+
+### 1. Creating a Cloudinary Account
+1. Sign up for a free account at [Cloudinary](https://cloudinary.com).
+2. Complete verification and log into the Cloudinary Console.
+
+### 2. Finding Your CLOUDINARY_URL
+1. From the Cloudinary Dashboard (Programmable Media), find **API Environment variable** under Product Environment Credentials.
+2. Click the copy icon to copy the URL format:
+   `cloudinary://<api_key>:<api_secret>@<cloud_name>`
+3. Never commit this URL or API keys to version control.
+
+### 3. Configuration & Render Ephemeral Disk Warning
+- **Local Development:** `USE_CLOUDINARY=False` is the default in `.env`. Uploaded images are stored locally under `media/`.
+- **Render Production:** Must set `USE_CLOUDINARY=True` and add `CLOUDINARY_URL` in the Render dashboard environment variables.
+- **Render Ephemeral Filesystem:** Render free web services have an ephemeral filesystem. Any files written to local disk are wiped on container restart or redeployment. Production must use Cloudinary to ensure uploaded gallery photos persist permanently.
 
