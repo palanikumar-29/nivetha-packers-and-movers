@@ -88,7 +88,12 @@ def contact(request):
 def robots_txt(request):
     """
     Serve robots.txt dynamically with Allow all, Disallow admin path, and Sitemap URL.
+    When ALLOW_INDEXING is False, disallow all crawlers and omit sitemap.
     """
+    allow_indexing = getattr(settings, 'ALLOW_INDEXING', False)
+    if not allow_indexing:
+        return HttpResponse("User-agent: *\nDisallow: /\n", content_type="text/plain")
+
     admin_url = (getattr(settings, 'ADMIN_URL', 'panel') or 'panel').strip('/') or 'panel'
     site_url = getattr(settings, 'SITE_URL', 'http://localhost:8000').rstrip('/')
     content = f"User-agent: *\nAllow: /\nDisallow: /{admin_url}/\nSitemap: {site_url}/sitemap.xml\n"

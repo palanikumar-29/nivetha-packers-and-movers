@@ -8,7 +8,11 @@
     <title>{% block title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Packers and movers in Tiruppur for household goods, office items and vehicles. Trips to Chennai, Madurai and nearby towns. Request a quote.{% endblock %}">
     <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    {% if not ALLOW_INDEXING %}
+    <meta name="robots" content="noindex, nofollow">
+    {% else %}
     {% block meta_robots %}{% endblock %}
+    {% endif %}
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% block og_title %}Packers and Movers in Tiruppur | Nivetha Movers{% endblock %}">

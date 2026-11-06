@@ -183,6 +183,7 @@ The test suite executes against an isolated SQLite test database and tests model
 | `CLOUDINARY_URL` | If Cloudinary | (empty) | `cloudinary://123456789:abcdefgh@cloudname` | Cloudinary API environment variable. |
 | `SITE_URL` | No | `http://localhost:8000` | `https://nivethapackers.in` | Absolute domain used in `sitemap.xml`, `robots.txt`, and JSON-LD. |
 | `ADMIN_URL` | No | `panel` | `panel` | Custom URL prefix for the Django management panel. |
+| `ALLOW_INDEXING` | No | `False` | `True` | When `False`, blocks all crawlers (`Disallow: /`) and adds `noindex, nofollow` to all pages. Set `True` on the final domain. |
 | `BUSINESS_PHONE` | No | (empty) | `+91 98765 43210` | Display phone number and `tel:` links. |
 | `BUSINESS_WHATSAPP` | No | (empty) | `+91 98765 43210` | WhatsApp number for direct click-to-chat links. |
 | `BUSINESS_ADDRESS` | No | `Tiruppur, Tamil Nadu` | `123 Kangeyam Road, Tiruppur, Tamil Nadu` | Address string used in footer and JSON-LD schema. |
@@ -228,6 +229,7 @@ DATABASE_URL = <your-neon-postgres-connection-string>
 USE_CLOUDINARY = False
 CLOUDINARY_URL = 
 ADMIN_URL = panel
+ALLOW_INDEXING = False
 BUSINESS_PHONE = +91 93442 66547
 BUSINESS_WHATSAPP = +91 93442 66547
 BUSINESS_ADDRESS = Tiruppur, Tamil Nadu
@@ -333,6 +335,7 @@ Before public launch, verify:
 - [ ] `SECURE_SSL_REDIRECT=True` and HTTPS automatically redirects.
 - [ ] Admin panel is secured at custom `/panel/` path; default `/admin/` returns 404.
 - [ ] `SITE_URL` matches the production custom domain (`https://nivethapackers.in`).
+- [ ] Set `ALLOW_INDEXING=True` on the final domain (enables search engine indexing and advertises sitemap).
 - [ ] `/sitemap.xml` lists all five public URLs with the live domain.
 - [ ] `/robots.txt` disallows `/panel/` and points to the live sitemap.
 - [ ] Submit `https://nivethapackers.in/sitemap.xml` to [Google Search Console](https://search.google.com/search-console).

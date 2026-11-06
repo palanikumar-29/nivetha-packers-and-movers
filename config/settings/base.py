@@ -159,4 +159,5 @@ TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
 # Site & Admin URLs for SEO (sitemap.xml and robots.txt)
 SITE_URL = config('SITE_URL', default='http://localhost:8000')
 ADMIN_URL = config('ADMIN_URL', default='panel').strip().strip('/') or 'panel'
+ALLOW_INDEXING = config('ALLOW_INDEXING', default=False, cast=bool)
 

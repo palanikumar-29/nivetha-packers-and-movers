@@ -38,6 +38,7 @@ class SeoInfrastructureTest(TestCase):
         self.assertIn('<loc>https://nivethapackers.in/services/</loc>', content)
         self.assertNotIn('localhost:8000', content)
 
+    @override_settings(ALLOW_INDEXING=True)
     def test_robots_txt_format_and_disallow_admin(self):
         response = self.client.get('/robots.txt')
         self.assertEqual(response.status_code, 200)
@@ -49,7 +50,7 @@ class SeoInfrastructureTest(TestCase):
         self.assertIn('Disallow: /panel/', content)
         self.assertIn('Sitemap: http://localhost:8000/sitemap.xml', content)
 
-    @override_settings(ADMIN_URL='secret-owner-portal', SITE_URL='https://nivethapackers.in')
+    @override_settings(ALLOW_INDEXING=True, ADMIN_URL='secret-owner-portal', SITE_URL='https://nivethapackers.in')
     def test_robots_txt_reflects_admin_url_and_site_url_settings(self):
         response = self.client.get('/robots.txt')
         self.assertEqual(response.status_code, 200)
@@ -59,13 +60,41 @@ class SeoInfrastructureTest(TestCase):
         self.assertNotIn('Disallow: /panel/', content)
         self.assertIn('Sitemap: https://nivethapackers.in/sitemap.xml', content)
 
-    @override_settings(ADMIN_URL='/custom-panel///')
+    @override_settings(ALLOW_INDEXING=True, ADMIN_URL='/custom-panel///')
     def test_robots_txt_normalizes_admin_url_with_slashes(self):
         response = self.client.get('/robots.txt')
         self.assertEqual(response.status_code, 200)
         content = response.content.decode()
         self.assertIn('Disallow: /custom-panel/', content)
         self.assertNotIn('//custom-panel', content)
+
+    @override_settings(ALLOW_INDEXING=False)
+    def test_robots_txt_when_allow_indexing_false(self):
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/plain')
+        content = response.content.decode()
+        self.assertEqual(content, "User-agent: *\nDisallow: /\n")
+        self.assertNotIn('Sitemap:', content)
+        self.assertNotIn('Allow:', content)
+
+    @override_settings(ALLOW_INDEXING=False)
+    def test_pages_have_noindex_meta_tag_when_allow_indexing_false(self):
+        pages = ['core:home', 'core:services', 'core:gallery', 'core:about', 'core:contact']
+        for page_name in pages:
+            response = self.client.get(reverse(page_name))
+            self.assertEqual(response.status_code, 200)
+            content = response.content.decode()
+            self.assertIn('<meta name="robots" content="noindex, nofollow">', content, f"Missing noindex on {page_name}")
+
+    @override_settings(ALLOW_INDEXING=True)
+    def test_pages_omit_noindex_meta_tag_when_allow_indexing_true(self):
+        pages = ['core:home', 'core:services', 'core:gallery', 'core:about', 'core:contact']
+        for page_name in pages:
+            response = self.client.get(reverse(page_name))
+            self.assertEqual(response.status_code, 200)
+            content = response.content.decode()
+            self.assertNotIn('<meta name="robots" content="noindex, nofollow">', content, f"Unexpected noindex on {page_name}")
 
     @override_settings(BUSINESS_PHONE='+91 98765 43210', BUSINESS_ADDRESS='Tiruppur, Tamil Nadu')
     def test_json_ld_valid_schema_and_expected_fields(self):
@@ -182,7 +211,7 @@ class SeoInfrastructureTest(TestCase):
             desc = desc_match.group(1).strip()
             self.assertLessEqual(len(desc), 160, f"Description too long on {page_name}: {desc}")
 
-    @override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver', 'localhost', '127.0.0.1'])
+    @override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver', 'localhost', '127.0.0.1'], ALLOW_INDEXING=True)
     def test_404_page_has_noindex_meta_tag(self):
         response = self.client.get('/this-path-does-not-exist-at-all-12345/')
         self.assertEqual(response.status_code, 404)

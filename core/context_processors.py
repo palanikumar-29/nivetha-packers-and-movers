@@ -40,5 +40,6 @@ def seo_context(request):
 
     return {
         'SITE_URL': site_url,
+        'ALLOW_INDEXING': getattr(settings, 'ALLOW_INDEXING', False),
         'schema_json': json.dumps(schema),
     }
