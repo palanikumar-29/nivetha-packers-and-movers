@@ -89,7 +89,7 @@ def robots_txt(request):
     """
     Serve robots.txt dynamically with Allow all, Disallow admin path, and Sitemap URL.
     """
-    admin_url = getattr(settings, 'ADMIN_URL', 'panel').strip('/')
+    admin_url = (getattr(settings, 'ADMIN_URL', 'panel') or 'panel').strip('/') or 'panel'
     site_url = getattr(settings, 'SITE_URL', 'http://localhost:8000').rstrip('/')
     content = f"User-agent: *\nAllow: /\nDisallow: /{admin_url}/\nSitemap: {site_url}/sitemap.xml\n"
     return HttpResponse(content, content_type="text/plain")

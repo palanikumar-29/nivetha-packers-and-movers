@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: nivetha-pm
+    runtime: python
+    region: singapore
+    plan: free
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn config.wsgi:application --workers 1 --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.production
+      - key: DEBUG
+        value: "False"
+      - key: USE_CLOUDINARY
+        value: "False"
+      - key: ADMIN_URL
+        value: panel
+      - key: BUSINESS_ADDRESS
+        value: "Tiruppur, Tamil Nadu"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: SITE_URL
+        sync: false
+      - key: BUSINESS_PHONE
+        sync: false
+      - key: BUSINESS_WHATSAPP
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false

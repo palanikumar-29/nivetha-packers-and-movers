@@ -59,6 +59,14 @@ class SeoInfrastructureTest(TestCase):
         self.assertNotIn('Disallow: /panel/', content)
         self.assertIn('Sitemap: https://nivethapackers.in/sitemap.xml', content)
 
+    @override_settings(ADMIN_URL='/custom-panel///')
+    def test_robots_txt_normalizes_admin_url_with_slashes(self):
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        self.assertIn('Disallow: /custom-panel/', content)
+        self.assertNotIn('//custom-panel', content)
+
     @override_settings(BUSINESS_PHONE='+91 98765 43210', BUSINESS_ADDRESS='Tiruppur, Tamil Nadu')
     def test_json_ld_valid_schema_and_expected_fields(self):
         pages = ['core:home', 'core:services', 'core:gallery', 'core:about', 'core:contact']

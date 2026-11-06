@@ -13,6 +13,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-change-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost:8000,http://127.0.0.1:8000', cast=Csv())
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -157,5 +158,5 @@ TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
 
 # Site & Admin URLs for SEO (sitemap.xml and robots.txt)
 SITE_URL = config('SITE_URL', default='http://localhost:8000')
-ADMIN_URL = config('ADMIN_URL', default='panel')
+ADMIN_URL = config('ADMIN_URL', default='panel').strip().strip('/') or 'panel'
 
