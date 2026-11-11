@@ -4,64 +4,113 @@
 
 @layer base {
   :root {
-    --color-bg-page: #FFFFFF;
-    --color-bg-alt: #F4F6F8;
-    --color-bg-surface: #FFFFFF;
+    --color-bg-page: #EBE2CC;
+    --color-bg-alt: #DED6C1;
+    --color-bg-surface: #F7F3E8;
+    --color-border: #B7B09E;
     --color-text-heading: #16325C;
-    --color-text-body: #1F2933;
-    --color-text-muted: #52606D;
-    --color-border: #D9E0E6;
-    --color-bg-header: #FFFFFF;
-    --color-bg-footer: #16325C;
-    --color-text-footer: #F3F5F2;
-    --color-text-footer-muted: #A9B6C6;
-    --color-lorry-orange: #F26B1D;
-    --color-lorry-orange-text: #1F2933;
+    --color-text-body: #26221A;
+    --color-text-muted: #5A5242;
+    --color-bg-header: #EBE2CC;
+    --color-bg-footer: #26221A;
+    --color-text-footer: #EBE2CC;
+    --color-text-footer-muted: #B7B09E;
+
+    --btn-primary-bg: #B5470F;
+    --btn-primary-text: #FFFFFF;
+    --btn-primary-hover: #963A0B;
+    --btn-secondary-outline: #16325C;
+    --btn-secondary-text: #16325C;
+    --btn-secondary-hover-bg: #16325C;
+    --btn-secondary-hover-text: #EBE2CC;
+    --color-focus-ring: #16325C;
+    --color-link: #963A0B;
+    --color-link-hover: #B5470F;
+
     --color-route-green: #0B6B3A;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --color-bg-page: #0F1B2D;
-      --color-bg-alt: #16263C;
-      --color-bg-surface: #16263C;
-      --color-text-heading: #FFFFFF;
-      --color-text-body: #E8EDF3;
-      --color-text-muted: #A9B6C6;
-      --color-border: #2B3E57;
-      --color-bg-header: #0B1524;
-      --color-bg-footer: #0B1524;
-      --color-text-footer: #E8EDF3;
-      --color-text-footer-muted: #A9B6C6;
+      --color-bg-page: #1F1C16;
+      --color-bg-alt: #2A261D;
+      --color-bg-surface: #2A261D;
+      --color-border: #4A4436;
+      --color-text-heading: #EBE2CC;
+      --color-text-body: #EBE2CC;
+      --color-text-muted: #B7B09E;
+      --color-bg-header: #151310;
+      --color-bg-footer: #151310;
+      --color-text-footer: #EBE2CC;
+      --color-text-footer-muted: #B7B09E;
+
+      --btn-primary-bg: #F26B1D;
+      --btn-primary-text: #1F1C16;
+      --btn-primary-hover: #FF8340;
+      --btn-secondary-outline: #EBE2CC;
+      --btn-secondary-text: #EBE2CC;
+      --btn-secondary-hover-bg: #EBE2CC;
+      --btn-secondary-hover-text: #1F1C16;
+      --color-focus-ring: #EBE2CC;
+      --color-link: #F26B1D;
+      --color-link-hover: #FF8340;
+
+      --color-route-green: #0B6B3A;
     }
   }
 
   :root[data-theme="dark"] {
-    --color-bg-page: #0F1B2D;
-    --color-bg-alt: #16263C;
-    --color-bg-surface: #16263C;
-    --color-text-heading: #FFFFFF;
-    --color-text-body: #E8EDF3;
-    --color-text-muted: #A9B6C6;
-    --color-border: #2B3E57;
-    --color-bg-header: #0B1524;
-    --color-bg-footer: #0B1524;
-    --color-text-footer: #E8EDF3;
-    --color-text-footer-muted: #A9B6C6;
+    --color-bg-page: #1F1C16;
+    --color-bg-alt: #2A261D;
+    --color-bg-surface: #2A261D;
+    --color-border: #4A4436;
+    --color-text-heading: #EBE2CC;
+    --color-text-body: #EBE2CC;
+    --color-text-muted: #B7B09E;
+    --color-bg-header: #151310;
+    --color-bg-footer: #151310;
+    --color-text-footer: #EBE2CC;
+    --color-text-footer-muted: #B7B09E;
+
+    --btn-primary-bg: #F26B1D;
+    --btn-primary-text: #1F1C16;
+    --btn-primary-hover: #FF8340;
+    --btn-secondary-outline: #EBE2CC;
+    --btn-secondary-text: #EBE2CC;
+    --btn-secondary-hover-bg: #EBE2CC;
+    --btn-secondary-hover-text: #1F1C16;
+    --color-focus-ring: #EBE2CC;
+    --color-link: #F26B1D;
+    --color-link-hover: #FF8340;
+
+    --color-route-green: #0B6B3A;
   }
 
   :root[data-theme="light"] {
-    --color-bg-page: #FFFFFF;
-    --color-bg-alt: #F4F6F8;
-    --color-bg-surface: #FFFFFF;
+    --color-bg-page: #EBE2CC;
+    --color-bg-alt: #DED6C1;
+    --color-bg-surface: #F7F3E8;
+    --color-border: #B7B09E;
     --color-text-heading: #16325C;
-    --color-text-body: #1F2933;
-    --color-text-muted: #52606D;
-    --color-border: #D9E0E6;
-    --color-bg-header: #FFFFFF;
-    --color-bg-footer: #16325C;
-    --color-text-footer: #F3F5F2;
-    --color-text-footer-muted: #A9B6C6;
+    --color-text-body: #26221A;
+    --color-text-muted: #5A5242;
+    --color-bg-header: #EBE2CC;
+    --color-bg-footer: #26221A;
+    --color-text-footer: #EBE2CC;
+    --color-text-footer-muted: #B7B09E;
+
+    --btn-primary-bg: #B5470F;
+    --btn-primary-text: #FFFFFF;
+    --btn-primary-hover: #963A0B;
+    --btn-secondary-outline: #16325C;
+    --btn-secondary-text: #16325C;
+    --btn-secondary-hover-bg: #16325C;
+    --btn-secondary-hover-text: #EBE2CC;
+    --color-focus-ring: #16325C;
+    --color-link: #963A0B;
+    --color-link-hover: #B5470F;
+
+    --color-route-green: #0B6B3A;
   }
 
   html {
@@ -74,5 +123,48 @@
     font-family: 'Hind Madurai', sans-serif;
     font-size: 17px;
     line-height: 1.65;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .btn-primary:hover {
+    background-color: var(--btn-primary-hover);
+  }
+  .btn-secondary {
+    border: 2px solid var(--btn-secondary-outline);
+    color: var(--btn-secondary-text);
+    background-color: transparent;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .btn-secondary:hover {
+    background-color: var(--btn-secondary-hover-bg);
+    color: var(--btn-secondary-hover-text);
+  }
+  .btn-whatsapp {
+    background-color: #0B6B3A;
+    color: #FFFFFF;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  .btn-whatsapp:hover {
+    background-color: #08522c;
+  }
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible,
+  .focus-ring:focus {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 }

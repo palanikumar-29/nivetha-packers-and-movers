@@ -16,10 +16,10 @@ document.documentElement.classList.add(l?'intro-low':'intro-play');
 </script>
 <style>
 .intro-overlay{display:none}
-html.intro-play .intro-overlay,html.intro-low .intro-overlay{display:flex;position:fixed;top:0;left:0;right:0;bottom:64px;z-index:40;background:#0B1524;overflow:hidden;align-items:center;justify-content:center}
+html.intro-play .intro-overlay,html.intro-low .intro-overlay{display:flex;position:fixed;top:0;left:0;right:0;bottom:64px;z-index:40;background:#151310;overflow:hidden;align-items:center;justify-content:center}
 html.intro-play body,html.intro-low body{overflow:hidden}
-.intro-skip{position:absolute;top:1rem;right:1rem;z-index:50;min-height:44px;min-width:44px;padding:8px 16px;background:rgba(255,255,255,.12);color:#FFF;border:1px solid rgba(255,255,255,.3);border-radius:4px;font-weight:600;cursor:pointer}
-.intro-skip:focus{outline:none;box-shadow:0 0 0 2px #F26B1D}
+.intro-skip{position:absolute;top:1rem;right:1rem;z-index:50;min-height:44px;min-width:44px;padding:8px 16px;background:rgba(235,226,204,.12);color:#EBE2CC;border:1px solid rgba(235,226,204,.3);border-radius:4px;font-weight:600;cursor:pointer}
+.intro-skip:focus{outline:none;box-shadow:0 0 0 2px #EBE2CC}
 .intro-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .intro-road{position:absolute;left:0;right:0;width:100%;height:16px;bottom:30px}
 .intro-truck{position:absolute;width:90px;height:45px;bottom:24px;will-change:transform}
@@ -74,13 +74,13 @@ html.intro-play #hero-section,html.intro-low #hero-section{animation:hU var(--d)
                 </p>
 
                 <div class="flex flex-wrap items-center gap-4 pt-2">
-                    <a href="#quote-form" class="inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-lg px-6 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lorry-orange min-h-[44px]">
+                    <a href="#quote-form" class="inline-flex items-center justify-center btn-primary focus-ring font-semibold text-lg px-6 py-3 rounded transition-colors min-h-[44px]">
                         Get a quote
                     </a>
 
                     {% if BUSINESS_PHONE %}
-                    <a href="tel:{{ BUSINESS_PHONE }}" class="inline-flex items-center justify-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-lg px-6 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-heading min-h-[44px]">
-                        <svg class="w-5 h-5 text-lorry-orange" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <a href="tel:{{ BUSINESS_PHONE }}" class="inline-flex items-center justify-center gap-2 btn-secondary focus-ring font-medium text-lg px-6 py-3 rounded transition-colors min-h-[44px]">
+                        <svg class="w-5 h-5 text-current" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
                         </svg>
                         <span>Call us</span>
@@ -150,28 +150,28 @@ html.intro-play #hero-section,html.intro-low #hero-section{animation:hU var(--d)
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Step 1 -->
             <div>
-                <div class="text-3xl sm:text-4xl font-bold text-lorry-orange mb-2">1</div>
+                <div class="text-3xl sm:text-4xl font-bold text-theme-link mb-2">1</div>
                 <h3 class="text-xl font-bold text-theme-heading mb-2">Call or send a request</h3>
                 <p class="text-theme-muted text-base leading-relaxed">Tell us what you want to move, where from, and where to.</p>
             </div>
 
             <!-- Step 2 -->
             <div>
-                <div class="text-3xl sm:text-4xl font-bold text-lorry-orange mb-2">2</div>
+                <div class="text-3xl sm:text-4xl font-bold text-theme-link mb-2">2</div>
                 <h3 class="text-xl font-bold text-theme-heading mb-2">Confirm the price</h3>
                 <p class="text-theme-muted text-base leading-relaxed">We give you a quote for the move before fixing the date.</p>
             </div>
 
             <!-- Step 3 -->
             <div>
-                <div class="text-3xl sm:text-4xl font-bold text-lorry-orange mb-2">3</div>
+                <div class="text-3xl sm:text-4xl font-bold text-theme-link mb-2">3</div>
                 <h3 class="text-xl font-bold text-theme-heading mb-2">Packing and loading</h3>
                 <p class="text-theme-muted text-base leading-relaxed">We pack your items and load them onto our vehicle.</p>
             </div>
 
             <!-- Step 4 -->
             <div>
-                <div class="text-3xl sm:text-4xl font-bold text-lorry-orange mb-2">4</div>
+                <div class="text-3xl sm:text-4xl font-bold text-theme-link mb-2">4</div>
                 <h3 class="text-xl font-bold text-theme-heading mb-2">Delivery and unloading</h3>
                 <p class="text-theme-muted text-base leading-relaxed">We transport your goods directly and unload them at your new place.</p>
             </div>
@@ -196,8 +196,8 @@ html.intro-play #hero-section,html.intro-low #hero-section{animation:hU var(--d)
                     <p class="text-sm font-semibold text-theme-heading">Prefer to speak directly?</p>
                     <div class="space-y-3">
                         {% if BUSINESS_PHONE %}
-                        <a href="tel:{{ BUSINESS_PHONE }}" class="flex items-center gap-3 border border-theme-border text-theme-heading hover:bg-theme-surface font-medium text-base px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                            <svg class="w-5 h-5 text-lorry-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <a href="tel:{{ BUSINESS_PHONE }}" class="flex items-center gap-3 border border-theme-border text-theme-heading hover:bg-theme-surface font-medium text-base px-4 py-3 rounded transition-colors focus-ring min-h-[44px]">
+                            <svg class="w-5 h-5 text-theme-link flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
                             </svg>
                             <span>Call our office</span>
@@ -205,8 +205,8 @@ html.intro-play #hero-section,html.intro-low #hero-section{animation:hU var(--d)
                         {% endif %}
 
                         {% if BUSINESS_WHATSAPP %}
-                        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 border border-theme-border text-theme-heading hover:bg-theme-surface font-medium text-base px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                            <svg class="w-5 h-5 text-lorry-orange flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 border border-theme-border text-theme-heading hover:bg-theme-surface font-medium text-base px-4 py-3 rounded transition-colors focus-ring min-h-[44px]">
+                            <svg class="w-5 h-5 text-theme-link flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
                             </svg>
                             <span>Message on WhatsApp</span>

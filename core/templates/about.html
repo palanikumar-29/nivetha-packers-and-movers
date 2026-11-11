@@ -79,8 +79,8 @@
                     <p class="text-sm text-theme-muted">Have a question about a move? Reach out directly.</p>
                     <div class="space-y-3">
                         {% if BUSINESS_PHONE %}
-                        <a href="tel:{{ BUSINESS_PHONE }}" class="w-full inline-flex items-center justify-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                            <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <a href="tel:{{ BUSINESS_PHONE }}" class="w-full inline-flex items-center justify-center gap-2 btn-secondary focus-ring font-medium text-sm px-4 py-3 rounded transition-colors min-h-[44px]">
+                            <svg class="w-4 h-4 text-current" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
                             </svg>
                             <span>Call our office</span>
@@ -88,8 +88,8 @@
                         {% endif %}
 
                         {% if BUSINESS_WHATSAPP %}
-                        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 border border-theme-border text-theme-heading hover:bg-theme-alt font-medium text-sm px-4 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-lorry-orange min-h-[44px]">
-                            <svg class="w-4 h-4 text-lorry-orange" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <a href="https://wa.me/{{ BUSINESS_WHATSAPP }}" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 btn-secondary focus-ring font-medium text-sm px-4 py-3 rounded transition-colors min-h-[44px]">
+                            <svg class="w-4 h-4 text-current" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.07-1.782-.406-1.464-.608-2.42-2.1-2.493-2.198-.072-.099-.604-.805-.604-1.537 0-.731.383-1.092.52-1.238.136-.145.297-.182.396-.182.099 0 .198.001.284.006.09.004.21-.034.328.25.122.294.417 1.019.454 1.093.037.074.062.161.012.26-.05.099-.075.16-.149.247-.075.086-.157.193-.224.259-.074.074-.152.155-.065.304.087.15.386.637.828 1.03.57.508 1.05.666 1.199.74.15.074.236.062.323-.037.087-.099.373-.434.472-.583.099-.15.198-.124.335-.074.136.05.867.409 1.016.483.149.074.248.112.285.174.037.062.037.36-.107.765z"/>
                             </svg>
                             <span>WhatsApp</span>

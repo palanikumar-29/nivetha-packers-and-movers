@@ -31,7 +31,7 @@
         <!-- Name -->
         <div>
             <label for="quote-name" class="block text-sm font-semibold text-theme-heading mb-2">Your name *</label>
-            <input type="text" name="name" id="quote-name" required value="{{ form.name.value|default:'' }}" placeholder="Ramesh" class="w-full bg-theme-surface border {% if form.name.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.name.errors %}aria-invalid="true" aria-describedby="quote-name-error"{% endif %}>
+            <input type="text" name="name" id="quote-name" required value="{{ form.name.value|default:'' }}" placeholder="Ramesh" class="w-full bg-theme-surface border {% if form.name.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.name.errors %}aria-invalid="true" aria-describedby="quote-name-error"{% endif %}>
             {% if form.name.errors %}
             <p id="quote-name-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.name.errors.0 }}</p>
             {% endif %}
@@ -40,7 +40,7 @@
         <!-- Phone -->
         <div>
             <label for="quote-phone" class="block text-sm font-semibold text-theme-heading mb-2">Phone number *</label>
-            <input type="tel" name="phone" id="quote-phone" required value="{{ form.phone.value|default:'' }}" placeholder="10-digit mobile number" class="w-full bg-theme-surface border {% if form.phone.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.phone.errors %}aria-invalid="true" aria-describedby="quote-phone-error"{% endif %}>
+            <input type="tel" name="phone" id="quote-phone" required value="{{ form.phone.value|default:'' }}" placeholder="10-digit mobile number" class="w-full bg-theme-surface border {% if form.phone.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.phone.errors %}aria-invalid="true" aria-describedby="quote-phone-error"{% endif %}>
             {% if form.phone.errors %}
             <p id="quote-phone-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.phone.errors.0 }}</p>
             {% endif %}
@@ -51,7 +51,7 @@
         <!-- Move Type -->
         <div>
             <label for="quote-move-type" class="block text-sm font-semibold text-theme-heading mb-2">Move type *</label>
-            <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border {% if form.move_type.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.move_type.errors %}aria-invalid="true" aria-describedby="quote-move-type-error"{% endif %}>
+            <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border {% if form.move_type.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.move_type.errors %}aria-invalid="true" aria-describedby="quote-move-type-error"{% endif %}>
                 <option value="house" {% if form.move_type.value == 'house' or not form.move_type.value %}selected{% endif %}>House move</option>
                 <option value="office" {% if form.move_type.value == 'office' %}selected{% endif %}>Office move</option>
                 <option value="vehicle" {% if form.move_type.value == 'vehicle' %}selected{% endif %}>Vehicle move</option>
@@ -65,7 +65,7 @@
         <!-- Moving From -->
         <div>
             <label for="quote-from" class="block text-sm font-semibold text-theme-heading mb-2">Moving from *</label>
-            <input type="text" name="moving_from" id="quote-from" required value="{{ form.moving_from.value|default:'' }}" placeholder="Tiruppur" class="w-full bg-theme-surface border {% if form.moving_from.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_from.errors %}aria-invalid="true" aria-describedby="quote-from-error"{% endif %}>
+            <input type="text" name="moving_from" id="quote-from" required value="{{ form.moving_from.value|default:'' }}" placeholder="Tiruppur" class="w-full bg-theme-surface border {% if form.moving_from.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_from.errors %}aria-invalid="true" aria-describedby="quote-from-error"{% endif %}>
             {% if form.moving_from.errors %}
             <p id="quote-from-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_from.errors.0 }}</p>
             {% endif %}
@@ -74,7 +74,7 @@
         <!-- Moving To -->
         <div>
             <label for="quote-to" class="block text-sm font-semibold text-theme-heading mb-2">Moving to *</label>
-            <input type="text" name="moving_to" id="quote-to" required value="{{ form.moving_to.value|default:'' }}" placeholder="Chennai / Madurai" class="w-full bg-theme-surface border {% if form.moving_to.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_to.errors %}aria-invalid="true" aria-describedby="quote-to-error"{% endif %}>
+            <input type="text" name="moving_to" id="quote-to" required value="{{ form.moving_to.value|default:'' }}" placeholder="Chennai / Madurai" class="w-full bg-theme-surface border {% if form.moving_to.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_to.errors %}aria-invalid="true" aria-describedby="quote-to-error"{% endif %}>
             {% if form.moving_to.errors %}
             <p id="quote-to-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_to.errors.0 }}</p>
             {% endif %}
@@ -85,7 +85,7 @@
         <!-- Preferred Date -->
         <div>
             <label for="quote-date" class="block text-sm font-semibold text-theme-heading mb-2">Preferred move date (optional)</label>
-            <input type="date" name="preferred_date" id="quote-date" value="{% if form.preferred_date.value %}{{ form.preferred_date.value|date:'Y-m-d'|default:form.preferred_date.value }}{% endif %}" class="w-full bg-theme-surface border {% if form.preferred_date.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.preferred_date.errors %}aria-invalid="true" aria-describedby="quote-date-error"{% endif %}>
+            <input type="date" name="preferred_date" id="quote-date" value="{% if form.preferred_date.value %}{{ form.preferred_date.value|date:'Y-m-d'|default:form.preferred_date.value }}{% endif %}" class="w-full bg-theme-surface border {% if form.preferred_date.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.preferred_date.errors %}aria-invalid="true" aria-describedby="quote-date-error"{% endif %}>
             {% if form.preferred_date.errors %}
             <p id="quote-date-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.preferred_date.errors.0 }}</p>
             {% endif %}
@@ -94,7 +94,7 @@
         <!-- Move Details -->
         <div>
             <label for="quote-details" class="block text-sm font-semibold text-theme-heading mb-2">Details (optional)</label>
-            <textarea name="details" id="quote-details" rows="2" placeholder="List of big items, floor number" class="w-full bg-theme-surface border {% if form.details.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-lorry-orange{% endif %} rounded px-4 py-2 text-theme-body placeholder-theme-muted/50 focus:outline-none focus:ring-2" {% if form.details.errors %}aria-invalid="true" aria-describedby="quote-details-error"{% endif %}>{{ form.details.value|default:'' }}</textarea>
+            <textarea name="details" id="quote-details" rows="2" placeholder="List of big items, floor number" class="w-full bg-theme-surface border {% if form.details.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-2 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2" {% if form.details.errors %}aria-invalid="true" aria-describedby="quote-details-error"{% endif %}>{{ form.details.value|default:'' }}</textarea>
             {% if form.details.errors %}
             <p id="quote-details-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.details.errors.0 }}</p>
             {% endif %}
@@ -102,7 +102,7 @@
     </div>
 
     <div>
-        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center bg-lorry-orange hover:bg-lorry-orange-hover text-lorry-dark font-semibold text-lg px-8 py-3 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lorry-orange min-h-[44px]">
+        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center btn-primary focus-ring font-semibold text-lg px-8 py-3 rounded transition-colors min-h-[44px]">
             Send request
         </button>
     </div>
