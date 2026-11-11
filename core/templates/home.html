@@ -16,10 +16,10 @@ document.documentElement.classList.add(l?'intro-low':'intro-play');
 </script>
 <style>
 .intro-overlay{display:none}
-html.intro-play .intro-overlay,html.intro-low .intro-overlay{display:flex;position:fixed;top:0;left:0;right:0;bottom:64px;z-index:40;background:#151310;overflow:hidden;align-items:center;justify-content:center}
+html.intro-play .intro-overlay,html.intro-low .intro-overlay{display:flex;position:fixed;top:0;left:0;right:0;bottom:64px;z-index:40;background:var(--intro-overlay-bg);overflow:hidden;align-items:center;justify-content:center}
 html.intro-play body,html.intro-low body{overflow:hidden}
-.intro-skip{position:absolute;top:1rem;right:1rem;z-index:50;min-height:44px;min-width:44px;padding:8px 16px;background:rgba(235,226,204,.12);color:#EBE2CC;border:1px solid rgba(235,226,204,.3);border-radius:4px;font-weight:600;cursor:pointer}
-.intro-skip:focus{outline:none;box-shadow:0 0 0 2px #EBE2CC}
+.intro-skip{position:absolute;top:1rem;right:1rem;z-index:50;min-height:44px;min-width:44px;padding:8px 16px;background:var(--intro-skip-bg);color:var(--intro-skip-text);border:1px solid var(--intro-skip-border);border-radius:4px;font-weight:600;cursor:pointer}
+.intro-skip:focus{outline:none;box-shadow:0 0 0 2px var(--intro-skip-focus)}
 .intro-stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .intro-road{position:absolute;left:0;right:0;width:100%;height:16px;bottom:30px}
 .intro-truck{position:absolute;width:90px;height:45px;bottom:24px;will-change:transform}

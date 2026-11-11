@@ -68,6 +68,22 @@ class ClientPanelTest(TestCase):
         self.assertIn('Gallery', content)
         self.assertNotIn('Users', content)
         self.assertNotIn('Groups', content)
+        self.assertNotIn('Site settings', content)
+
+    def test_client_user_cannot_access_sitesettings(self):
+        self.client.login(username='client_owner', password='Password123!')
+        resp = self.client.get('/panel/core/sitesettings/')
+        self.assertEqual(resp.status_code, 403)
+
+    def test_superuser_can_access_sitesettings(self):
+        self.client.login(username='super_admin', password='Password123!')
+        resp = self.client.get('/panel/core/sitesettings/')
+        self.assertEqual(resp.status_code, 200)
+
+    def test_client_group_has_no_sitesettings_permissions(self):
+        call_command('create_client_group')
+        group = Group.objects.get(name='Client')
+        self.assertFalse(group.permissions.filter(codename__endswith='sitesettings').exists())
 
     def test_client_user_cannot_access_auth_user_or_group(self):
         self.client.login(username='client_owner', password='Password123!')

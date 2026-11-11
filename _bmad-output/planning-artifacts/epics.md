@@ -466,3 +466,51 @@ So that any developer can run the project locally and deploy to Render + Neon wi
 **Tests written and passing:**
 - All existing tests from Stories 1.1–2.2 pass.
 - (Optional) A smoke-test script or `curl` sequence is documented in the README that verifies the five pages and form submission on the staging URL.
+
+---
+
+### Story 2.4: Palette Presets
+
+As a site administrator,
+I want to switch the website color scheme between ready-made presets without code changes,
+So that we can refresh or adjust the site branding easily while preserving WCAG AA contrast and theme support.
+
+**Acceptance Criteria:**
+
+**Given** the CSS stylesheets and theme token definitions  
+**When** inspecting `:root[data-palette="navy"]` and `:root[data-palette="beige"]`  
+**Then** both define the full set of shared tokens (page, alternate, surface, lines, headings, body, muted, header, footer, button primary, button secondary, focus ring, intro overlay colors); route board green stays `#0B6B3A` across all presets; and dark variants are provided for both system dark mode (`prefers-color-scheme`) and explicit `data-theme="dark"`.
+
+**Given** the `SiteSettings` singleton model in `core`  
+**When** reading or updating `palette`  
+**Then** it allows selecting from predefined palette choices (`beige`, `navy`), defaults to `SITE_PALETTE` env var (default `"beige"`), enforces a single row, and prevents row deletion.
+
+**Given** the `palette_context` context processor and `base.html`  
+**When** any public page (`/`, `/services/`, `/gallery/`, `/about/`, `/contact/`) is requested  
+**Then** the `<html>` root element renders `data-palette="<active_palette>"` server-side with zero layout shift or flash; unknown values safely fall back to the default palette.
+
+**Given** the `/panel/` administration interface  
+**When** a superuser accesses the admin  
+**Then** they can view and update the `Site settings` palette dropdown with helpful description text; creating duplicate rows or deleting the row is prevented.
+
+**Given** a Client staff user logged into `/panel/`  
+**When** viewing the admin index or attempting direct URL access to Site settings  
+**Then** `Site settings` is hidden and permission is denied; the Client group permissions remain strictly limited to the required 10 permissions.
+
+**Given** the WCAG AA contrast requirements  
+**When** computing contrast ratios for each preset in light and dark variants  
+**Then** text elements achieve ≥ 4.5:1 contrast against their backgrounds and UI components (focus rings, button borders) achieve ≥ 3:1 contrast.
+
+**Given** the opening animation on the Home page  
+**When** the intro plays in either preset  
+**Then** all overlay elements, SVG components, and Skip buttons use the active preset's CSS tokens without hardcoded hex values outside token definitions.
+
+**Tests written and passing:**
+- Default palette matches `SITE_PALETTE` env var or defaults to `"beige"`.
+- Switching palette via `SiteSettings` updates `data-palette` attribute across all five public pages.
+- Unknown or invalid palette values fall back safely to default.
+- Singleton behavior: `SiteSettings` cannot have a second row created or be deleted.
+- Permissions: Superuser can manage Site settings; Client user cannot view, add, change, or delete Site settings.
+- Group permissions: `Client` user group retains exactly 10 permissions.
+- Contrast verification: Test asserts WCAG AA ratios (≥ 4.5:1 text, ≥ 3:1 UI borders) for all presets in light and dark themes.
+- No hardcoded hex values outside token definitions in templates.

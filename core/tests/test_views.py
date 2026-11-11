@@ -143,11 +143,12 @@ class HomePageViewTest(TestCase):
         self.assertIn("setAttribute('data-theme'", head_content)
 
     def test_both_theme_token_sets_present_in_compiled_css(self):
-        """Verify compiled CSS defines both light and dark beige token sets and button tokens."""
+        """Verify compiled CSS defines tokens for both beige and navy presets."""
         css_path = Path(settings.BASE_DIR) / 'static' / 'css' / 'output.css'
         self.assertTrue(css_path.exists(), f"Compiled CSS not found at {css_path}")
         css_content = css_path.read_text(encoding='utf-8').lower()
 
+        # Beige preset tokens
         self.assertIn('--color-bg-page:#ebe2cc', css_content)
         self.assertIn('--color-bg-alt:#ded6c1', css_content)
         self.assertIn('--color-text-heading:#16325c', css_content)
@@ -161,6 +162,12 @@ class HomePageViewTest(TestCase):
         self.assertIn('--btn-primary-bg:#b5470f', css_content)
         self.assertIn('--btn-primary-bg:#f26b1d', css_content)
         self.assertIn('#0b6b3a', css_content)
+
+        # Navy preset tokens
+        self.assertIn('--color-bg-page:#fff', css_content)
+        self.assertIn('--color-bg-page:#0f1b2d', css_content)
+        self.assertIn('--color-border:#d9e0e6', css_content)
+        self.assertIn('--color-border:#2b3e57', css_content)
 
     def test_ai_patterns_and_invented_claims_removed(self):
         """Verify AI clichés, eyebrow badges, and unconfirmed claims are not in page copy."""

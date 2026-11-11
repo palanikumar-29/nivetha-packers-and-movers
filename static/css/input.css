@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  /* Default fallback (beige) */
   :root {
     --color-bg-page: #EBE2CC;
     --color-bg-alt: #DED6C1;
@@ -28,8 +29,112 @@
     --color-link-hover: #B5470F;
 
     --color-route-green: #0B6B3A;
+
+    --intro-overlay-bg: #151310;
+    --intro-skip-bg: rgba(235, 226, 204, 0.12);
+    --intro-skip-text: #EBE2CC;
+    --intro-skip-border: rgba(235, 226, 204, 0.3);
+    --intro-skip-focus: #EBE2CC;
+    --intro-road-base: #4A4436;
+    --intro-road-dashes: #EBE2CC;
+    --intro-truck-cargo: #2A261D;
+    --intro-truck-stroke: #4A4436;
+    --intro-truck-accent: #F26B1D;
+    --intro-truck-window: #EBE2CC;
+    --intro-truck-wheel-fill: #151310;
+    --intro-parcel-body: #F26B1D;
+    --intro-parcel-flap: #2A261D;
   }
 
+  /* Preset: Beige (Light) */
+  :root[data-palette="beige"],
+  :root[data-palette="beige"][data-theme="light"] {
+    --color-bg-page: #EBE2CC;
+    --color-bg-alt: #DED6C1;
+    --color-bg-surface: #F7F3E8;
+    --color-border: #B7B09E;
+    --color-text-heading: #16325C;
+    --color-text-body: #26221A;
+    --color-text-muted: #5A5242;
+    --color-bg-header: #EBE2CC;
+    --color-bg-footer: #26221A;
+    --color-text-footer: #EBE2CC;
+    --color-text-footer-muted: #B7B09E;
+
+    --btn-primary-bg: #B5470F;
+    --btn-primary-text: #FFFFFF;
+    --btn-primary-hover: #963A0B;
+    --btn-secondary-outline: #16325C;
+    --btn-secondary-text: #16325C;
+    --btn-secondary-hover-bg: #16325C;
+    --btn-secondary-hover-text: #EBE2CC;
+    --color-focus-ring: #16325C;
+    --color-link: #963A0B;
+    --color-link-hover: #B5470F;
+
+    --color-route-green: #0B6B3A;
+
+    --intro-overlay-bg: #151310;
+    --intro-skip-bg: rgba(235, 226, 204, 0.12);
+    --intro-skip-text: #EBE2CC;
+    --intro-skip-border: rgba(235, 226, 204, 0.3);
+    --intro-skip-focus: #EBE2CC;
+    --intro-road-base: #4A4436;
+    --intro-road-dashes: #EBE2CC;
+    --intro-truck-cargo: #2A261D;
+    --intro-truck-stroke: #4A4436;
+    --intro-truck-accent: #F26B1D;
+    --intro-truck-window: #EBE2CC;
+    --intro-truck-wheel-fill: #151310;
+    --intro-parcel-body: #F26B1D;
+    --intro-parcel-flap: #2A261D;
+  }
+
+  /* Preset: Navy (Light) */
+  :root[data-palette="navy"],
+  :root[data-palette="navy"][data-theme="light"] {
+    --color-bg-page: #FFFFFF;
+    --color-bg-alt: #F4F6F8;
+    --color-bg-surface: #FFFFFF;
+    --color-border: #D9E0E6;
+    --color-text-heading: #16325C;
+    --color-text-body: #1F2933;
+    --color-text-muted: #52606D;
+    --color-bg-header: #FFFFFF;
+    --color-bg-footer: #16325C;
+    --color-text-footer: #F3F5F2;
+    --color-text-footer-muted: #A9B6C6;
+
+    --btn-primary-bg: #F26B1D;
+    --btn-primary-text: #1F2933;
+    --btn-primary-hover: #D95A10;
+    --btn-secondary-outline: #16325C;
+    --btn-secondary-text: #16325C;
+    --btn-secondary-hover-bg: #16325C;
+    --btn-secondary-hover-text: #FFFFFF;
+    --color-focus-ring: #16325C;
+    --color-link: #16325C;
+    --color-link-hover: #0E203B;
+
+    --color-route-green: #0B6B3A;
+
+    --intro-overlay-bg: #0B1524;
+    --intro-skip-bg: rgba(255, 255, 255, 0.12);
+    --intro-skip-text: #FFFFFF;
+    --intro-skip-border: rgba(255, 255, 255, 0.3);
+    --intro-skip-focus: #F26B1D;
+    --intro-road-base: #2B3E57;
+    --intro-road-dashes: #FFFFFF;
+    --intro-truck-cargo: #16325C;
+    --intro-truck-stroke: #D9E0E6;
+    --intro-truck-accent: #F26B1D;
+    --intro-truck-window: #E8EDF3;
+    --intro-truck-wheel-fill: #0B1524;
+    --intro-parcel-body: #F26B1D;
+    --intro-parcel-flap: #16325C;
+  }
+
+  /* System dark mode (prefers-color-scheme, unless data-theme="light") */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --color-bg-page: #1F1C16;
@@ -56,10 +161,111 @@
       --color-link-hover: #FF8340;
 
       --color-route-green: #0B6B3A;
+
+      --intro-overlay-bg: #151310;
+      --intro-skip-bg: rgba(235, 226, 204, 0.12);
+      --intro-skip-text: #EBE2CC;
+      --intro-skip-border: rgba(235, 226, 204, 0.3);
+      --intro-skip-focus: #EBE2CC;
+      --intro-road-base: #4A4436;
+      --intro-road-dashes: #EBE2CC;
+      --intro-truck-cargo: #2A261D;
+      --intro-truck-stroke: #4A4436;
+      --intro-truck-accent: #F26B1D;
+      --intro-truck-window: #EBE2CC;
+      --intro-truck-wheel-fill: #151310;
+      --intro-parcel-body: #F26B1D;
+      --intro-parcel-flap: #2A261D;
+    }
+
+    :root[data-palette="beige"]:not([data-theme="light"]) {
+      --color-bg-page: #1F1C16;
+      --color-bg-alt: #2A261D;
+      --color-bg-surface: #2A261D;
+      --color-border: #4A4436;
+      --color-text-heading: #EBE2CC;
+      --color-text-body: #EBE2CC;
+      --color-text-muted: #B7B09E;
+      --color-bg-header: #151310;
+      --color-bg-footer: #151310;
+      --color-text-footer: #EBE2CC;
+      --color-text-footer-muted: #B7B09E;
+
+      --btn-primary-bg: #F26B1D;
+      --btn-primary-text: #1F1C16;
+      --btn-primary-hover: #FF8340;
+      --btn-secondary-outline: #EBE2CC;
+      --btn-secondary-text: #EBE2CC;
+      --btn-secondary-hover-bg: #EBE2CC;
+      --btn-secondary-hover-text: #1F1C16;
+      --color-focus-ring: #EBE2CC;
+      --color-link: #F26B1D;
+      --color-link-hover: #FF8340;
+
+      --color-route-green: #0B6B3A;
+
+      --intro-overlay-bg: #151310;
+      --intro-skip-bg: rgba(235, 226, 204, 0.12);
+      --intro-skip-text: #EBE2CC;
+      --intro-skip-border: rgba(235, 226, 204, 0.3);
+      --intro-skip-focus: #EBE2CC;
+      --intro-road-base: #4A4436;
+      --intro-road-dashes: #EBE2CC;
+      --intro-truck-cargo: #2A261D;
+      --intro-truck-stroke: #4A4436;
+      --intro-truck-accent: #F26B1D;
+      --intro-truck-window: #EBE2CC;
+      --intro-truck-wheel-fill: #151310;
+      --intro-parcel-body: #F26B1D;
+      --intro-parcel-flap: #2A261D;
+    }
+
+    :root[data-palette="navy"]:not([data-theme="light"]) {
+      --color-bg-page: #0F1B2D;
+      --color-bg-alt: #16263C;
+      --color-bg-surface: #16263C;
+      --color-border: #2B3E57;
+      --color-text-heading: #FFFFFF;
+      --color-text-body: #E8EDF3;
+      --color-text-muted: #A9B6C6;
+      --color-bg-header: #0B1524;
+      --color-bg-footer: #0B1524;
+      --color-text-footer: #E8EDF3;
+      --color-text-footer-muted: #A9B6C6;
+
+      --btn-primary-bg: #F26B1D;
+      --btn-primary-text: #0F1B2D;
+      --btn-primary-hover: #FF8340;
+      --btn-secondary-outline: #FFFFFF;
+      --btn-secondary-text: #FFFFFF;
+      --btn-secondary-hover-bg: #FFFFFF;
+      --btn-secondary-hover-text: #0F1B2D;
+      --color-focus-ring: #FFFFFF;
+      --color-link: #F26B1D;
+      --color-link-hover: #FF8340;
+
+      --color-route-green: #0B6B3A;
+
+      --intro-overlay-bg: #0B1524;
+      --intro-skip-bg: rgba(255, 255, 255, 0.12);
+      --intro-skip-text: #FFFFFF;
+      --intro-skip-border: rgba(255, 255, 255, 0.3);
+      --intro-skip-focus: #F26B1D;
+      --intro-road-base: #2B3E57;
+      --intro-road-dashes: #FFFFFF;
+      --intro-truck-cargo: #16325C;
+      --intro-truck-stroke: #D9E0E6;
+      --intro-truck-accent: #F26B1D;
+      --intro-truck-window: #E8EDF3;
+      --intro-truck-wheel-fill: #0B1524;
+      --intro-parcel-body: #F26B1D;
+      --intro-parcel-flap: #16325C;
     }
   }
 
-  :root[data-theme="dark"] {
+  /* Explicit Dark Theme */
+  :root[data-theme="dark"],
+  :root[data-palette="beige"][data-theme="dark"] {
     --color-bg-page: #1F1C16;
     --color-bg-alt: #2A261D;
     --color-bg-surface: #2A261D;
@@ -84,33 +290,63 @@
     --color-link-hover: #FF8340;
 
     --color-route-green: #0B6B3A;
+
+    --intro-overlay-bg: #151310;
+    --intro-skip-bg: rgba(235, 226, 204, 0.12);
+    --intro-skip-text: #EBE2CC;
+    --intro-skip-border: rgba(235, 226, 204, 0.3);
+    --intro-skip-focus: #EBE2CC;
+    --intro-road-base: #4A4436;
+    --intro-road-dashes: #EBE2CC;
+    --intro-truck-cargo: #2A261D;
+    --intro-truck-stroke: #4A4436;
+    --intro-truck-accent: #F26B1D;
+    --intro-truck-window: #EBE2CC;
+    --intro-truck-wheel-fill: #151310;
+    --intro-parcel-body: #F26B1D;
+    --intro-parcel-flap: #2A261D;
   }
 
-  :root[data-theme="light"] {
-    --color-bg-page: #EBE2CC;
-    --color-bg-alt: #DED6C1;
-    --color-bg-surface: #F7F3E8;
-    --color-border: #B7B09E;
-    --color-text-heading: #16325C;
-    --color-text-body: #26221A;
-    --color-text-muted: #5A5242;
-    --color-bg-header: #EBE2CC;
-    --color-bg-footer: #26221A;
-    --color-text-footer: #EBE2CC;
-    --color-text-footer-muted: #B7B09E;
+  :root[data-palette="navy"][data-theme="dark"] {
+    --color-bg-page: #0F1B2D;
+    --color-bg-alt: #16263C;
+    --color-bg-surface: #16263C;
+    --color-border: #2B3E57;
+    --color-text-heading: #FFFFFF;
+    --color-text-body: #E8EDF3;
+    --color-text-muted: #A9B6C6;
+    --color-bg-header: #0B1524;
+    --color-bg-footer: #0B1524;
+    --color-text-footer: #E8EDF3;
+    --color-text-footer-muted: #A9B6C6;
 
-    --btn-primary-bg: #B5470F;
-    --btn-primary-text: #FFFFFF;
-    --btn-primary-hover: #963A0B;
-    --btn-secondary-outline: #16325C;
-    --btn-secondary-text: #16325C;
-    --btn-secondary-hover-bg: #16325C;
-    --btn-secondary-hover-text: #EBE2CC;
-    --color-focus-ring: #16325C;
-    --color-link: #963A0B;
-    --color-link-hover: #B5470F;
+    --btn-primary-bg: #F26B1D;
+    --btn-primary-text: #0F1B2D;
+    --btn-primary-hover: #FF8340;
+    --btn-secondary-outline: #FFFFFF;
+    --btn-secondary-text: #FFFFFF;
+    --btn-secondary-hover-bg: #FFFFFF;
+    --btn-secondary-hover-text: #0F1B2D;
+    --color-focus-ring: #FFFFFF;
+    --color-link: #F26B1D;
+    --color-link-hover: #FF8340;
 
     --color-route-green: #0B6B3A;
+
+    --intro-overlay-bg: #0B1524;
+    --intro-skip-bg: rgba(255, 255, 255, 0.12);
+    --intro-skip-text: #FFFFFF;
+    --intro-skip-border: rgba(255, 255, 255, 0.3);
+    --intro-skip-focus: #F26B1D;
+    --intro-road-base: #2B3E57;
+    --intro-road-dashes: #FFFFFF;
+    --intro-truck-cargo: #16325C;
+    --intro-truck-stroke: #D9E0E6;
+    --intro-truck-accent: #F26B1D;
+    --intro-truck-window: #E8EDF3;
+    --intro-truck-wheel-fill: #0B1524;
+    --intro-parcel-body: #F26B1D;
+    --intro-parcel-flap: #16325C;
   }
 
   html {

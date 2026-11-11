@@ -184,6 +184,7 @@ The test suite executes against an isolated SQLite test database and tests model
 | `SITE_URL` | No | `http://localhost:8000` | `https://nivethapackers.in` | Absolute domain used in `sitemap.xml`, `robots.txt`, and JSON-LD. |
 | `ADMIN_URL` | No | `panel` | `panel` | Custom URL prefix for the Django management panel. |
 | `ALLOW_INDEXING` | No | `False` | `True` | When `False`, blocks all crawlers (`Disallow: /`) and adds `noindex, nofollow` to all pages. Set `True` on the final domain. |
+| `SITE_PALETTE` | No | `beige` | `beige` or `navy` | Active visual color palette preset. Can also be switched dynamically in `/panel/`. |
 | `BUSINESS_PHONE` | No | (empty) | `+91 98765 43210` | Display phone number and `tel:` links. |
 | `BUSINESS_WHATSAPP` | No | (empty) | `+91 98765 43210` | WhatsApp number for direct click-to-chat links. |
 | `BUSINESS_ADDRESS` | No | `Tiruppur, Tamil Nadu` | `123 Kangeyam Road, Tiruppur, Tamil Nadu` | Address string used in footer and JSON-LD schema. |
@@ -324,6 +325,27 @@ curl -s -o /dev/null -w "%{http_code} Default admin 404 check\n" "$STAGING_URL/a
 2. Copy the URL format:
    `cloudinary://<api_key>:<api_secret>@<cloud_name>`
 3. Set `CLOUDINARY_URL` in the Render dashboard. Never commit this key to version control.
+
+---
+
+## Color Palette Presets
+
+The website supports instant visual switching between ready-made design presets (default: `beige`; choices: `beige`, `navy`). Each preset provides light and dark mode support with verified WCAG AA contrast.
+
+### Switching the Palette in the Admin Panel
+1. Log in to `/panel/` as a **superuser** (Client users cannot see or modify site settings).
+2. Click **Site settings** under Core.
+3. Select the desired palette preset (`Beige` or `Navy`) from the dropdown.
+4. Click **Save**. The change applies immediately across all pages without requiring a server restart.
+
+### Adding a New Preset
+To add a new preset in the future:
+1. Add one new CSS preset block to `static/css/input.css` defining the light and dark tokens under `:root[data-palette="<name>"]`.
+2. Add the preset identifier to the `PALETTES` choices list in `core/models.py`.
+3. Recompile the Tailwind CSS stylesheet:
+   ```powershell
+   .\bin\tailwindcss.exe -i static/css/input.css -o static/css/output.css --minify
+   ```
 
 ---
 

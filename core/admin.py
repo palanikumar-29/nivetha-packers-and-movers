@@ -1,7 +1,7 @@
 import urllib.parse
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import QuoteRequest, EnquiryStatus, Service, GalleryImage
+from .models import QuoteRequest, EnquiryStatus, Service, GalleryImage, SiteSettings
 from .forms import GalleryImageAdminForm
 
 
@@ -99,3 +99,24 @@ class GalleryImageAdmin(admin.ModelAdmin):
     list_display = ('caption', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('caption',)
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'palette')
+    fields = ('palette',)
+
+    def has_module_permission(self, request):
+        return bool(request.user and request.user.is_superuser)
+
+    def has_view_permission(self, request, obj=None):
+        return bool(request.user and request.user.is_superuser)
+
+    def has_change_permission(self, request, obj=None):
+        return bool(request.user and request.user.is_superuser)
+
+    def has_add_permission(self, request):
+        return bool(request.user and request.user.is_superuser and not SiteSettings.objects.exists())
+
+    def has_delete_permission(self, request, obj=None):
+        return False

@@ -43,3 +43,13 @@ def seo_context(request):
         'ALLOW_INDEXING': getattr(settings, 'ALLOW_INDEXING', False),
         'schema_json': json.dumps(schema),
     }
+
+
+def palette_context(request):
+    """Provide the active color palette preset to templates."""
+    from .models import SiteSettings
+    palette = SiteSettings.get_solo()
+    return {
+        'ACTIVE_PALETTE': palette,
+        'SITE_PALETTE': palette,
+    }

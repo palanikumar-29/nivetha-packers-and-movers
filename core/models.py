@@ -102,3 +102,68 @@ class GalleryImage(models.Model):
             return url.replace('/upload/', '/upload/f_auto,q_auto,w_1600,c_limit/', 1)
         return url
 
+
+PALETTES = [
+    ('beige', 'Beige'),
+    ('navy', 'Navy'),
+]
+PALETTE_NAMES = [p[0] for p in PALETTES]
+DEFAULT_PALETTE = 'beige'
+
+
+def get_default_palette():
+    from django.conf import settings
+    val = getattr(settings, 'SITE_PALETTE', DEFAULT_PALETTE)
+    return val if val in PALETTE_NAMES else DEFAULT_PALETTE
+
+
+class SiteSettings(models.Model):
+    palette = models.CharField(
+        max_length=20,
+        choices=PALETTES,
+        default=get_default_palette,
+        help_text='Visual color theme preset for the website (beige or navy).'
+    )
+
+    class Meta:
+        verbose_name = 'Site settings'
+        verbose_name_plural = 'Site settings'
+
+    def __str__(self):
+        return f"Site settings ({self.get_palette_display()})"
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+        from django.core.cache import cache
+        cache.set('site_palette', self.palette, timeout=300)
+
+    def delete(self, *args, **kwargs):
+        # Prevent deleting the singleton settings row
+        pass
+
+    @classmethod
+    def get_solo(cls):
+        from django.core.cache import cache
+        from django.conf import settings
+
+        cached = cache.get('site_palette')
+        if cached and cached in PALETTE_NAMES:
+            return cached
+
+        default_env = getattr(settings, 'SITE_PALETTE', DEFAULT_PALETTE)
+        if default_env not in PALETTE_NAMES:
+            default_env = DEFAULT_PALETTE
+
+        try:
+            obj = cls.objects.first()
+            if not obj:
+                obj = cls.objects.create(pk=1, palette=default_env)
+            palette = obj.palette if obj.palette in PALETTE_NAMES else default_env
+        except Exception:
+            palette = default_env
+
+        cache.set('site_palette', palette, timeout=300)
+        return palette
+
+

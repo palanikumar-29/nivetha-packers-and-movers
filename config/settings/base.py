@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.business_contact',
                 'core.context_processors.seo_context',
+                'core.context_processors.palette_context',
             ],
         },
     },
@@ -160,4 +161,5 @@ TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
 SITE_URL = config('SITE_URL', default='http://localhost:8000')
 ADMIN_URL = config('ADMIN_URL', default='panel').strip().strip('/') or 'panel'
 ALLOW_INDEXING = config('ALLOW_INDEXING', default=False, cast=bool)
+SITE_PALETTE = config('SITE_PALETTE', default='beige')
 

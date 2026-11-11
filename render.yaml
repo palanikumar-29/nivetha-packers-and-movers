@@ -19,6 +19,8 @@ services:
         value: panel
       - key: ALLOW_INDEXING
         value: "False"
+      - key: SITE_PALETTE
+        value: beige
       - key: BUSINESS_ADDRESS
         value: "Tiruppur, Tamil Nadu"
       - key: SECRET_KEY
