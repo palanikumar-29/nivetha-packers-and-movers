@@ -104,7 +104,7 @@ class GalleryImageAdmin(admin.ModelAdmin):
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'palette')
-    fields = ('palette',)
+    fields = ('palette', 'logo')
 
     def has_module_permission(self, request):
         return bool(request.user and request.user.is_superuser)

@@ -46,10 +46,12 @@ def seo_context(request):
 
 
 def palette_context(request):
-    """Provide the active color palette preset to templates."""
+    """Provide the active color palette preset and optional logo to templates."""
     from .models import SiteSettings
     palette = SiteSettings.get_solo()
+    logo_url = SiteSettings.get_logo_url()
     return {
         'ACTIVE_PALETTE': palette,
         'SITE_PALETTE': palette,
+        'SITE_LOGO_URL': logo_url,
     }

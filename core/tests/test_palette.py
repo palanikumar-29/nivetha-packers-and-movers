@@ -131,6 +131,7 @@ class PalettePresetsTest(TestCase):
         resp_get = self.client.get('/panel/core/sitesettings/1/change/')
         self.assertEqual(resp_get.status_code, 200)
         self.assertIn('palette', resp_get.content.decode('utf-8'))
+        self.assertIn('logo', resp_get.content.decode('utf-8'))
 
         resp_post = self.client.post('/panel/core/sitesettings/1/change/', {'palette': 'navy'})
         self.assertEqual(resp_post.status_code, 302)
@@ -274,3 +275,44 @@ class PalettePresetsTest(TestCase):
                 [],
                 f"Hardcoded hex colors found in {html_file.name}: {matches}"
             )
+
+    def test_header_logo_falls_back_to_text_wordmark_when_no_logo(self):
+        """Header displays text wordmark when no logo is configured."""
+        cache.clear()
+        response = self.client.get('/')
+        content = response.content.decode('utf-8')
+        self.assertIn('Nivetha Packers and Movers</span>', content)
+        self.assertNotIn('<img src="" alt="Nivetha Packers and Movers"', content)
+
+    @override_settings(SITE_LOGO='img/test-logo.png')
+    def test_header_logo_slot_renders_image_when_static_logo_configured(self):
+        """Header renders logo <img> when SITE_LOGO is set."""
+        cache.clear()
+        response = self.client.get('/')
+        content = response.content.decode('utf-8')
+        self.assertIn('<img src="/static/img/test-logo.png" alt="Nivetha Packers and Movers"', content)
+
+    def test_gallery_intro_copy_is_neutral(self):
+        """Gallery page uses neutral intro text without claiming images are job photos."""
+        response = self.client.get('/gallery/')
+        content = response.content.decode('utf-8')
+        self.assertIn('A look at Nivetha Packers and Movers.', content)
+        self.assertNotIn('Photos from packing, loading, and moving jobs', content)
+
+    def test_quote_form_moving_to_placeholder_is_short(self):
+        """Moving to input uses shortened placeholder suitable for narrow screens."""
+        response = self.client.get('/contact/')
+        content = response.content.decode('utf-8')
+        self.assertIn('placeholder="City or town"', content)
+        self.assertNotIn('placeholder="Chennai / Madurai"', content)
+
+    def test_services_seed_command_avoids_invented_phrases(self):
+        """Seed command uses plain neutral wording without invented phrases."""
+        from django.core.management import call_command
+        from core.models import Service
+
+        call_command('seed_services')
+        services = Service.objects.all()
+        for svc in services:
+            self.assertNotIn('scheduled transit times', svc.description)
+            self.assertNotIn('careful handling', svc.description)

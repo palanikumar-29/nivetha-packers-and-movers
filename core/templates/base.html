@@ -61,10 +61,16 @@
     <!-- Primary Header & Navigation -->
     <header class="border-b border-theme-border bg-theme-header sticky top-0 z-30 transition-colors">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            <!-- Plain Wordmark -->
-            <a href="{% url 'core:home' %}" class="flex flex-col group focus-ring rounded p-1">
-                <span class="font-bold text-xl sm:text-2xl text-theme-heading transition-colors">Nivetha Packers and Movers</span>
-                <span class="text-xs text-theme-muted">Tiruppur, Tamil Nadu</span>
+            <!-- Brand Logo or Plain Wordmark -->
+            <a href="{% url 'core:home' %}" class="flex items-center gap-3 group focus-ring rounded p-1">
+                {% if SITE_LOGO_URL %}
+                <img src="{{ SITE_LOGO_URL }}" alt="Nivetha Packers and Movers" class="h-10 sm:h-12 w-auto object-contain">
+                {% else %}
+                <div class="flex flex-col">
+                    <span class="font-bold text-xl sm:text-2xl text-theme-heading transition-colors">Nivetha Packers and Movers</span>
+                    <span class="text-xs text-theme-muted">Tiruppur, Tamil Nadu</span>
+                </div>
+                {% endif %}
             </a>
 
             <!-- Navigation Links & Theme Toggle -->

@@ -74,7 +74,7 @@
         <!-- Moving To -->
         <div>
             <label for="quote-to" class="block text-sm font-semibold text-theme-heading mb-2">Moving to *</label>
-            <input type="text" name="moving_to" id="quote-to" required value="{{ form.moving_to.value|default:'' }}" placeholder="Chennai / Madurai" class="w-full bg-theme-surface border {% if form.moving_to.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_to.errors %}aria-invalid="true" aria-describedby="quote-to-error"{% endif %}>
+            <input type="text" name="moving_to" id="quote-to" required value="{{ form.moving_to.value|default:'' }}" placeholder="City or town" class="w-full bg-theme-surface border {% if form.moving_to.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_to.errors %}aria-invalid="true" aria-describedby="quote-to-error"{% endif %}>
             {% if form.moving_to.errors %}
             <p id="quote-to-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_to.errors.0 }}</p>
             {% endif %}

@@ -124,6 +124,12 @@ class SiteSettings(models.Model):
         default=get_default_palette,
         help_text='Visual color theme preset for the website (beige or navy).'
     )
+    logo = models.ImageField(
+        upload_to='site/',
+        blank=True,
+        null=True,
+        help_text='Optional site logo image. If empty, the header displays the text wordmark.'
+    )
 
     class Meta:
         verbose_name = 'Site settings'
@@ -137,6 +143,10 @@ class SiteSettings(models.Model):
         super().save(*args, **kwargs)
         from django.core.cache import cache
         cache.set('site_palette', self.palette, timeout=300)
+        if self.logo:
+            cache.set('site_logo_url', self.logo.url, timeout=300)
+        else:
+            cache.delete('site_logo_url')
 
     def delete(self, *args, **kwargs):
         # Prevent deleting the singleton settings row
@@ -165,5 +175,36 @@ class SiteSettings(models.Model):
 
         cache.set('site_palette', palette, timeout=300)
         return palette
+
+    @classmethod
+    def get_logo_url(cls):
+        from django.core.cache import cache
+        from django.conf import settings
+        from django.templatetags.static import static
+
+        cached = cache.get('site_logo_url')
+        if cached:
+            return cached
+
+        logo_url = ''
+        try:
+            obj = cls.objects.first()
+            if obj and obj.logo:
+                logo_url = obj.logo.url
+        except Exception:
+            pass
+
+        if not logo_url:
+            static_logo = getattr(settings, 'SITE_LOGO', '')
+            if static_logo:
+                try:
+                    logo_url = static(static_logo)
+                except Exception:
+                    static_url = getattr(settings, 'STATIC_URL', '/static/')
+                    logo_url = f"{static_url.rstrip('/')}/{static_logo.lstrip('/')}"
+
+        if logo_url:
+            cache.set('site_logo_url', logo_url, timeout=300)
+        return logo_url
 
 
