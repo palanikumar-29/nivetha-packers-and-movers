@@ -113,7 +113,7 @@ python manage.py migrate
 
 Setup initial moving services and client permissions:
 ```powershell
-# 1. Seed initial moving services (Household, Office, Vehicle)
+# 1. Seed initial moving services (Household, Office, Factory)
 python manage.py seed_services
 
 # 2. Configure the "Client" user group with restricted model permissions

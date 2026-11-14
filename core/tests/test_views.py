@@ -187,6 +187,10 @@ class HomePageViewTest(TestCase):
             "chennai",
             "madurai",
             "guaranteed",
+            "vehicle transport",
+            "car transport",
+            "bike transport",
+            "gps",
             "no hidden charges",
             "no upfront fees",
             "clear pricing",
@@ -292,18 +296,18 @@ class ServicesPageViewTest(TestCase):
 
     def test_services_active_ordering_and_inactive_excluded(self):
         """Verify active services display in order and inactive services are excluded."""
-        Service.objects.create(title='Vehicle Moving', description='Two-wheelers transported.', order=2, is_active=True)
+        Service.objects.create(title='Factory Moving', description='Machinery shifted.', order=2, is_active=True)
         Service.objects.create(title='House Moving', description='Household items shifted.', order=1, is_active=True)
         Service.objects.create(title='Inactive Service', description='Hidden.', order=0, is_active=False)
 
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
         self.assertIn("House Moving", content)
-        self.assertIn("Vehicle Moving", content)
+        self.assertIn("Factory Moving", content)
         self.assertNotIn("Inactive Service", content)
 
         pos1 = content.index("House Moving")
-        pos2 = content.index("Vehicle Moving")
+        pos2 = content.index("Factory Moving")
         self.assertLess(pos1, pos2)
 
     def test_services_empty_state(self):
@@ -379,6 +383,16 @@ class GalleryPageViewTest(TestCase):
             self.assertIn('Packing household goods in Tiruppur', content)
             self.assertNotIn('Hidden photo', content)
 
+    def test_gallery_image_with_empty_caption_falls_back_to_default_alt_text(self):
+        """Verify image with empty caption falls back to default alt text."""
+        with override_settings(MEDIA_ROOT=self.temp_media):
+            dummy_file = SimpleUploadedFile('photo.gif', b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b', content_type='image/gif')
+            GalleryImage.objects.create(image=dummy_file, caption='', order=1, is_active=True)
+
+            response = self.client.get(self.url)
+            content = response.content.decode('utf-8')
+            self.assertIn('alt="Nivetha Packers and Movers photo"', content)
+
     def test_gallery_empty_state(self):
         """Verify friendly fallback message when no gallery images are in database."""
         response = self.client.get(self.url)
@@ -440,9 +454,10 @@ class AboutPageViewTest(TestCase):
         self.assertIn("Tamil Nadu", content)
         self.assertNotIn("Chennai", content)
         self.assertNotIn("Madurai", content)
+        self.assertNotIn("Vehicle transport", content)
         self.assertIn("Household shifting", content)
         self.assertIn("Office relocation", content)
-        self.assertIn("Vehicle transport", content)
+        self.assertIn("Factory & garment machinery", content)
 
 
 class ContactPageViewTest(TestCase):
@@ -590,6 +605,10 @@ class CrossPageSiteTest(TestCase):
             "chennai",
             "madurai",
             "guaranteed",
+            "vehicle transport",
+            "car transport",
+            "bike transport",
+            "gps",
         ]
         for name, url in self.urls.items():
             response = self.client.get(url)

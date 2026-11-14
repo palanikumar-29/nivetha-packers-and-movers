@@ -34,7 +34,7 @@ class ServiceModelTest(TestCase):
 
     def test_service_ordering(self):
         """Verify services order by 'order', then 'id'."""
-        s2 = Service.objects.create(title='Vehicle Transport', order=2)
+        s2 = Service.objects.create(title='Factory Shifting', order=2)
         s1 = Service.objects.create(title='Office Moving', order=1)
         services = list(Service.objects.all())
         self.assertEqual(services[0], s1)
@@ -210,4 +210,21 @@ class GalleryImageModelTest(TestCase):
         self.assertEqual(saved.order, 1)
         self.assertEqual(str(saved), 'Packing household goods securely in Tiruppur')
         self.assertTrue(saved.image.name.startswith('gallery/'))
+
+    def test_gallery_image_with_optional_blank_caption(self):
+        """Verify GalleryImage can be created with empty caption and str fallback."""
+        dummy_image = SimpleUploadedFile(
+            name='test_blank.jpg',
+            content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b',
+            content_type='image/gif'
+        )
+        gallery_img = GalleryImage.objects.create(
+            image=dummy_image,
+            caption='',
+            order=2,
+            is_active=True
+        )
+        saved = GalleryImage.objects.get(pk=gallery_img.pk)
+        self.assertEqual(saved.caption, '')
+        self.assertEqual(str(saved), f"Gallery image {saved.pk}")
 

@@ -11,8 +11,9 @@ Read these primary reference documents before making any changes:
    - Use existing CSS variable tokens (`--color-*`, `--btn-*`, `--intro-*`) and Tailwind utility classes.
    - Never add ad-hoc hex codes, gradients, neon accents, or unapproved palettes.
 2. **No Invented Facts**:
-   - Only state what is confirmed: household moves, office moves, vehicle transport within Tiruppur and all over Tamil Nadu, with main focus on Tiruppur.
-   - **Forbidden words**: `regular`, `reliable`, `trusted`, `fast`, `experienced`, `years`, `guaranteed`, `free quote`, `no hidden charges`, `Coimbatore`, `Chennai`, `Madurai`.
+   - Only state what is confirmed: household moves, office moves, and garment/factory goods shifting within Tiruppur and all over Tamil Nadu, with main focus on Tiruppur.
+   - Do NOT offer or mention car/bike/vehicle transport, storage, or GPS.
+   - **Forbidden words**: `regular`, `reliable`, `trusted`, `fast`, `experienced`, `years`, `guaranteed`, `free`, `free quote`, `no hidden charges`, `Coimbatore`, `Chennai`, `Madurai`, `GPS`, `storage`.
 3. **Security & Privacy**:
    - No hardcoded secrets, phone numbers, email addresses, or credentials. Use environment variable names only.
    - Never print or log personal user data (names, phones) or secret tokens in console, admin, or logs.

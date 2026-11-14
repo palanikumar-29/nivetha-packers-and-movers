@@ -286,11 +286,12 @@ class PalettePresetsTest(TestCase):
 
     @override_settings(SITE_LOGO='img/test-logo.png')
     def test_header_logo_slot_renders_image_when_static_logo_configured(self):
-        """Header renders logo <img> when SITE_LOGO is set."""
+        """Header renders logo <img> with alt text and fixed height when SITE_LOGO is set."""
         cache.clear()
         response = self.client.get('/')
         content = response.content.decode('utf-8')
         self.assertIn('<img src="/static/img/test-logo.png" alt="Nivetha Packers and Movers"', content)
+        self.assertIn('height="48"', content)
 
     def test_gallery_intro_copy_is_neutral(self):
         """Gallery page uses neutral intro text without claiming images are job photos."""
@@ -300,10 +301,12 @@ class PalettePresetsTest(TestCase):
         self.assertNotIn('Photos from packing, loading, and moving jobs', content)
 
     def test_quote_form_moving_to_placeholder_is_short(self):
-        """Moving to input uses shortened placeholder suitable for narrow screens."""
+        """Moving to and moving from inputs use shortened placeholders suitable for narrow screens."""
         response = self.client.get('/contact/')
         content = response.content.decode('utf-8')
         self.assertIn('placeholder="City or town"', content)
+        self.assertIn('name="moving_from"', content)
+        self.assertIn('name="moving_to"', content)
 
     def test_services_seed_command_avoids_invented_phrases(self):
         """Seed command uses plain neutral wording without invented phrases."""
@@ -315,3 +318,4 @@ class PalettePresetsTest(TestCase):
         for svc in services:
             self.assertNotIn('scheduled transit times', svc.description)
             self.assertNotIn('careful handling', svc.description)
+            self.assertNotIn('vehicle transport', svc.description.lower())

@@ -1,7 +1,8 @@
 # Project Status: Nivetha Packers and Movers
 
 **Last Updated**: November 2026  
-**Test Suite Status**: 144 / 144 tests passing (100% green)
+**Test Suite Status**: 145 / 145 tests passing (100% green)  
+**Staging Status**: Live on Render with Neon PostgreSQL and Cloudinary
 
 ---
 
@@ -21,30 +22,30 @@
 
 ---
 
-## 2. Open Items (Pending Client & Live Launch)
+## 2. Service Area & Brand Rules
 
-1. **Client Content & Photos**: Receive authentic high-resolution packing and transport photos from the business owner to populate the gallery.
-2. **Brand Logo**: Receive the official vector or transparent PNG logo from the client to place in the header logo slot.
-3. **Custom Domain**: Connect the production domain (e.g. `nivethapackers.in`) to the Render service and update DNS CNAME records.
-4. **Cloudinary Production Setup**: Enter live `CLOUDINARY_URL` credentials in Render environment variables and toggle `USE_CLOUDINARY=True`.
-5. **Google Business Profile**: Verify the client's Google Business Profile with matching name, phone number, and Tiruppur address.
-6. **Analytics (Optional Story 2.5)**: If client requests visitor metrics, integrate a privacy-friendly, cookie-free tool (e.g. Plausible or Cloudflare Web Analytics).
-7. **Production Go-Live Checklist**: Complete the final deployment checklist in `docs/RUNBOOK.md` before publicly launching.
+- **Service Area**: Tiruppur (main focus) and all over Tamil Nadu.
+- **Strict Copy Rule**: Chennai and Madurai are NOT mentioned anywhere in templates, copy, SEO, docs, or tests.
+- **Palette Presets**: `navy` and `beige`, switchable in Site settings (`SiteSettings` singleton model in `/panel/`).
 
 ---
 
-## 3. Known Constraints & Edge Cases
+## 3. Current Live Status & Pending Items
 
-- **Render Free Tier Spin-Down**: On Render's free tier, the web service sleeps after 15 minutes of inactivity. First load after sleep takes approximately 30–50 seconds (cold start). For zero downtime, upgrade to the Starter tier ($7/mo).
-- **Ephemeral Storage on Free Tier**: Local disk storage on Render is reset whenever the service rebuilds or restarts. Gallery images MUST use Cloudinary (`USE_CLOUDINARY=True`) in production to persist across deploys.
-- **SMS / WhatsApp Direct Messaging**: Outbound SMS gateways or official WhatsApp Business APIs are not configured. The site uses direct customer-initiated `wa.me` links, which requires no recurring monthly API fees.
+- **Current Environment**: Staging is **LIVE on Render** connected to Neon PostgreSQL and Cloudinary storage.
+- **Pending Items (Client & Go-Live)**:
+  1. **Real photos from client**: High-resolution packing and shifting photos from client.
+  2. **Custom domain**: Client will purchase domain later; configure DNS CNAME and update `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, and `SITE_URL` when bought.
+  3. **Render paid upgrade**: Optional upgrade from Free to Starter ($7/mo) to eliminate 15-minute spin-down cold starts.
+  4. **`ALLOW_INDEXING=True`**: Switch from `False` to `True` on final domain to enable search engine indexing.
+  5. **Analytics**: Optional GA4 or privacy-friendly analytics integration upon client request.
+  6. **Google Business Profile**: Verify listing with matching Tiruppur address and phone number.
+  7. **Balance payment**: Final payment upon client content sign-off and custom domain rollout.
 
 ---
 
-## 4. Next Recommended Task
+## 4. Known Constraints & Operating Notes
 
-**Task**: Execute the staging deployment on Render following [`docs/RUNBOOK.md`](file:///e:/Nivetha-p&m/docs/RUNBOOK.md).  
-1. Create free Neon PostgreSQL database and copy `DATABASE_URL`.
-2. Connect repo to Render, enter environment variables, and trigger initial deploy.
-3. Run `python manage.py createsuperuser` and `python manage.py create_client_group` in the Render shell.
-4. Verify all 5 public pages load and submit a test quote request to confirm database persistence.
+- **Render Free Tier Spin-Down**: Free tier sleeps after 15 minutes of inactivity (30–50s cold start). Upgrade to Starter ($7/mo) for zero cold starts.
+- **Media Persistence**: Staging verified with Cloudinary (`USE_CLOUDINARY=True`). Ephemeral disk reset will not affect uploaded media.
+- **Customer Leads**: Client manages quotes in `/panel/` with 1-click WhatsApp (`wa.me`) follow-up links.

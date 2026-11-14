@@ -20,8 +20,8 @@ class Command(BaseCommand):
                 'is_active': True,
             },
             {
-                'title': 'Two-Wheeler & Vehicle Transport',
-                'description': 'Transport for two-wheelers and personal vehicles within Tiruppur and all over Tamil Nadu.',
+                'title': 'Factory & Garment Machinery Shifting',
+                'description': 'Moving garment machinery, factory equipment, and textile goods within Tiruppur and all over Tamil Nadu.',
                 'order': 3,
                 'is_active': True,
             },

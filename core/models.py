@@ -12,7 +12,7 @@ phone_validator = RegexValidator(
 class MoveType(models.TextChoices):
     HOUSE = 'house', 'House Move'
     OFFICE = 'office', 'Office Move'
-    VEHICLE = 'vehicle', 'Vehicle Move'
+    FACTORY = 'factory', 'Factory / Commercial'
     OTHER = 'other', 'Other'
 
 
@@ -77,7 +77,7 @@ class Service(models.Model):
 
 class GalleryImage(models.Model):
     image = models.ImageField(upload_to='gallery/')
-    caption = models.CharField(max_length=200)
+    caption = models.CharField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
@@ -87,7 +87,7 @@ class GalleryImage(models.Model):
         ordering = ['order', 'id']
 
     def __str__(self):
-        return self.caption
+        return self.caption or f"Gallery image {self.pk or ''}"
 
     @property
     def optimized_url(self):

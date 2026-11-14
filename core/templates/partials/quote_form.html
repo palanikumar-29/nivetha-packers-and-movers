@@ -54,7 +54,7 @@
             <select name="move_type" id="quote-move-type" class="w-full bg-theme-surface border {% if form.move_type.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body focus:outline-none focus:ring-2 min-h-[44px]" {% if form.move_type.errors %}aria-invalid="true" aria-describedby="quote-move-type-error"{% endif %}>
                 <option value="house" {% if form.move_type.value == 'house' or not form.move_type.value %}selected{% endif %}>House move</option>
                 <option value="office" {% if form.move_type.value == 'office' %}selected{% endif %}>Office move</option>
-                <option value="vehicle" {% if form.move_type.value == 'vehicle' %}selected{% endif %}>Vehicle move</option>
+                <option value="factory" {% if form.move_type.value == 'factory' %}selected{% endif %}>Factory / Commercial</option>
                 <option value="other" {% if form.move_type.value == 'other' %}selected{% endif %}>Other</option>
             </select>
             {% if form.move_type.errors %}
@@ -65,7 +65,7 @@
         <!-- Moving From -->
         <div>
             <label for="quote-from" class="block text-sm font-semibold text-theme-heading mb-2">Moving from *</label>
-            <input type="text" name="moving_from" id="quote-from" required value="{{ form.moving_from.value|default:'' }}" placeholder="Tiruppur" class="w-full bg-theme-surface border {% if form.moving_from.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_from.errors %}aria-invalid="true" aria-describedby="quote-from-error"{% endif %}>
+            <input type="text" name="moving_from" id="quote-from" required value="{{ form.moving_from.value|default:'' }}" placeholder="City or town" class="w-full bg-theme-surface border {% if form.moving_from.errors %}border-red-600 focus:ring-red-600{% else %}border-theme-border focus:ring-theme-focus-ring{% endif %} rounded px-4 py-3 text-theme-body placeholder-theme-muted focus:outline-none focus:ring-2 min-h-[44px]" {% if form.moving_from.errors %}aria-invalid="true" aria-describedby="quote-from-error"{% endif %}>
             {% if form.moving_from.errors %}
             <p id="quote-from-error" class="mt-1 text-sm text-red-600 font-medium" role="alert">{{ form.moving_from.errors.0 }}</p>
             {% endif %}

@@ -31,7 +31,7 @@ class QuoteFormTest(TestCase):
         form_data = {
             'name': 'Suresh',
             'phone': '6381234567',
-            'move_type': MoveType.VEHICLE,
+            'move_type': MoveType.FACTORY,
             'moving_from': 'Tiruppur',
             'moving_to': 'Tamil Nadu',
         }
