@@ -1,6 +1,6 @@
 # Nivetha Packers and Movers — Web Platform
 
-Small business website and lead-capture platform for Nivetha Packers and Movers (Tiruppur, Tamil Nadu), serving routes to Chennai, Madurai, and nearby towns.
+Small business website and lead-capture platform for Nivetha Packers and Movers (Tiruppur, Tamil Nadu) and nearby towns.
 
 ## Tech Stack
 
