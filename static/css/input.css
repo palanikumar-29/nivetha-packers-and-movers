@@ -356,7 +356,7 @@
   body {
     background-color: var(--color-bg-page);
     color: var(--color-text-body);
-    font-family: 'Hind Madurai', sans-serif;
+    font-family: 'Hind', sans-serif;
     font-size: 17px;
     line-height: 1.65;
   }

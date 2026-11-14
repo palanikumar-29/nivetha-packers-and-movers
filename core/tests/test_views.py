@@ -70,13 +70,15 @@ class HomePageViewTest(TestCase):
         self.assertIn('href="#main-content"', content)
 
     def test_route_board_content_present_in_plain_html(self):
-        """Verify highway route board contains Tiruppur, Chennai, Madurai, Nearby towns in plain HTML."""
+        """Verify highway route board contains Tiruppur, Within Tiruppur, and Across Tamil Nadu in plain HTML."""
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
         self.assertIn("Tiruppur", content)
-        self.assertIn("Chennai", content)
-        self.assertIn("Madurai", content)
-        self.assertIn("Nearby towns", content)
+        self.assertIn("Within Tiruppur", content)
+        self.assertIn("Across Tamil Nadu", content)
+        self.assertNotIn("Chennai", content)
+        self.assertNotIn("Madurai", content)
+        self.assertNotIn("Nearby towns", content)
         self.assertNotIn("ROUTE 47", content)
         self.assertNotIn("TAMIL NADU CORRIDOR", content)
         self.assertNotIn("ORIGIN HUB", content)
@@ -182,6 +184,8 @@ class HomePageViewTest(TestCase):
             "experienced",
             "years",
             "coimbatore",
+            "chennai",
+            "madurai",
             "guaranteed",
             "no hidden charges",
             "no upfront fees",
@@ -217,6 +221,16 @@ class HomePageViewTest(TestCase):
         content = response.content.decode('utf-8')
         self.assertIn('tel:919876543210', content)
         self.assertIn('https://wa.me/919876543210', content)
+
+    def test_chennai_and_madurai_appear_nowhere_in_rendered_public_pages(self):
+        """Verify that Chennai and Madurai appear nowhere in any rendered public pages."""
+        pages = ['core:home', 'core:services', 'core:gallery', 'core:about', 'core:contact']
+        for page_name in pages:
+            response = self.client.get(reverse(page_name))
+            self.assertEqual(response.status_code, 200)
+            content = response.content.decode('utf-8')
+            self.assertNotIn("Chennai", content, f"'Chennai' found on {page_name}")
+            self.assertNotIn("Madurai", content, f"'Madurai' found on {page_name}")
 
     @override_settings(BUSINESS_PHONE='', BUSINESS_WHATSAPP='')
     def test_contact_buttons_when_empty_env(self):
@@ -268,12 +282,13 @@ class ServicesPageViewTest(TestCase):
         self.assertIn('/services/', content)
 
     def test_local_keywords_present(self):
-        """Verify Tiruppur, Chennai, and Madurai appear naturally in copy."""
+        """Verify Tiruppur and Tamil Nadu appear naturally in copy, and Chennai/Madurai do not."""
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
         self.assertIn("Tiruppur", content)
-        self.assertIn("Chennai", content)
-        self.assertIn("Madurai", content)
+        self.assertIn("Tamil Nadu", content)
+        self.assertNotIn("Chennai", content)
+        self.assertNotIn("Madurai", content)
 
     def test_services_active_ordering_and_inactive_excluded(self):
         """Verify active services display in order and inactive services are excluded."""
@@ -422,8 +437,9 @@ class AboutPageViewTest(TestCase):
         response = self.client.get(self.url)
         content = response.content.decode('utf-8')
         self.assertIn("Tiruppur", content)
-        self.assertIn("Chennai", content)
-        self.assertIn("Madurai", content)
+        self.assertIn("Tamil Nadu", content)
+        self.assertNotIn("Chennai", content)
+        self.assertNotIn("Madurai", content)
         self.assertIn("Household shifting", content)
         self.assertIn("Office relocation", content)
         self.assertIn("Vehicle transport", content)
@@ -571,6 +587,8 @@ class CrossPageSiteTest(TestCase):
             "experienced",
             "years",
             "coimbatore",
+            "chennai",
+            "madurai",
             "guaranteed",
         ]
         for name, url in self.urls.items():
@@ -592,7 +610,7 @@ class QuoteFormSubmissionViewTest(TestCase):
             'phone': '9876543210',
             'move_type': 'house',
             'moving_from': 'Tiruppur',
-            'moving_to': 'Chennai',
+            'moving_to': 'Tamil Nadu',
             'preferred_date': self.future_date,
             'details': 'Household shifting 2 BHK',
             'website': '',

@@ -105,7 +105,7 @@ class ClientPanelTest(TestCase):
             phone='9876543210',
             move_type=MoveType.HOUSE,
             moving_from='Tiruppur',
-            moving_to='Chennai',
+            moving_to='Tamil Nadu',
             status=EnquiryStatus.NEW,
         )
 
@@ -124,7 +124,7 @@ class ClientPanelTest(TestCase):
             phone='9876543210',
             move_type=MoveType.HOUSE,
             moving_from='Tiruppur',
-            moving_to='Madurai',
+            moving_to='Tamil Nadu',
             status=EnquiryStatus.NEW,
         )
 
@@ -137,7 +137,7 @@ class ClientPanelTest(TestCase):
         self.assertIn('WhatsApp customer', content)
         self.assertIn('<a href="https://wa.me/9876543210', content)
         self.assertIn('Ravi%20Kumar', content)
-        self.assertIn('Madurai', content)
+        self.assertIn('Tamil%20Nadu', content)
 
     def test_status_change_from_new_to_called_persists_status_updated_at(self):
         enquiry = QuoteRequest.objects.create(
@@ -145,7 +145,7 @@ class ClientPanelTest(TestCase):
             phone='9876543210',
             move_type=MoveType.OFFICE,
             moving_from='Tiruppur',
-            moving_to='Chennai',
+            moving_to='Tamil Nadu',
             status=EnquiryStatus.NEW,
         )
         self.assertIsNone(enquiry.status_updated_at)

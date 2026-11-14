@@ -50,7 +50,7 @@ class QuoteRequestModelTest(TestCase):
             phone='9876543210',
             move_type=MoveType.HOUSE,
             moving_from='Tiruppur',
-            moving_to='Chennai',
+            moving_to='Tamil Nadu',
             preferred_date=future_date,
             details='2 BHK household items',
             status=EnquiryStatus.NEW,
@@ -61,7 +61,7 @@ class QuoteRequestModelTest(TestCase):
         self.assertEqual(saved.phone, '9876543210')
         self.assertEqual(saved.move_type, MoveType.HOUSE)
         self.assertEqual(saved.moving_from, 'Tiruppur')
-        self.assertEqual(saved.moving_to, 'Chennai')
+        self.assertEqual(saved.moving_to, 'Tamil Nadu')
         self.assertEqual(saved.preferred_date, future_date)
         self.assertEqual(saved.status, EnquiryStatus.NEW)
         self.assertEqual(str(saved), 'Kavitha — House Move (New)')
@@ -74,7 +74,7 @@ class QuoteRequestModelTest(TestCase):
                 name='Ramesh',
                 phone=phone,
                 moving_from='Tiruppur',
-                moving_to='Madurai'
+                moving_to='Tamil Nadu'
             )
             try:
                 quote.full_clean()
@@ -96,7 +96,7 @@ class QuoteRequestModelTest(TestCase):
                 name='Ramesh',
                 phone=phone,
                 moving_from='Tiruppur',
-                moving_to='Madurai'
+                moving_to='Tamil Nadu'
             )
             with self.assertRaises(ValidationError):
                 quote.full_clean()
@@ -144,7 +144,7 @@ class QuoteRequestModelTest(TestCase):
             name='Dhanasekar',
             phone='9876543210',
             moving_from='Tiruppur',
-            moving_to='Madurai',
+            moving_to='Tamil Nadu',
             preferred_date=past_date,
             status=EnquiryStatus.NEW
         )

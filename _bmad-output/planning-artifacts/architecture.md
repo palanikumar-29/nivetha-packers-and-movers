@@ -288,7 +288,7 @@ Sitemap: https://{domain}/sitemap.xml
 
 ### JSON-LD schema (Story 1.6)
 
-Rendered inline in `home.html` using a Django template. Schema type: `["LocalBusiness", "MovingCompany"]`. Fields: `name`, `address` (Tiruppur, Tamil Nadu), `telephone` from `BUSINESS_PHONE` env var, `areaServed: ["Tiruppur", "Chennai", "Madurai"]`. No external library.
+Rendered inline in `home.html` using a Django template. Schema type: `["LocalBusiness", "MovingCompany"]`. Fields: `name`, `address` (Tiruppur, Tamil Nadu), `telephone` from `BUSINESS_PHONE` env var, `areaServed: ["Tiruppur", {"@type": "AdministrativeArea", "name": "Tamil Nadu"}]`. No external library.
 
 ---
 

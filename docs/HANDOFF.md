@@ -9,7 +9,7 @@ This document outlines the business context, technical architecture, design deci
 - **Client**: Nivetha Packers and Movers.
 - **Location**: Tiruppur, Tamil Nadu, India.
 - **Service Categories**: Household shifting, office relocation, two-wheeler and vehicle transport.
-- **Service Coverage**: Tiruppur local moves, plus intercity trips to Chennai, Madurai, and nearby districts in Tamil Nadu.
+- **Service Coverage**: Tiruppur moves with primary focus, plus moves all over Tamil Nadu.
 - **Primary Goals**:
   1. High-speed local SEO ranking for "packers and movers Tiruppur".
   2. Frictionless enquiry capture via phone calls, WhatsApp click-to-chat, and a lightweight web quote form.
@@ -148,4 +148,4 @@ The admin panel is mounted at `ADMIN_URL` (`/panel/` by default; `/admin/` retur
 1. **Do NOT introduce frontend JS frameworks** (React, Vue, Svelte, Next.js). Keep templates server-rendered.
 2. **Do NOT use SMTP email sending on Render free tier** (outbound port 25/465/587 is frequently blocked or rate-limited; use WhatsApp or Telegram).
 3. **Do NOT deploy this project to Vercel** (Vercel is tailored for Node/serverless; Render web services handle persistent Gunicorn + WSGI cleanly).
-4. **Do NOT invent marketing claims**: Never state unverified facts, years in business, or unserved cities (strictly avoid words like `regular`, `reliable`, `trusted`, `fast`, `experienced`, `years`, `guaranteed`, `free quote`, `no hidden charges`, `Coimbatore`).
+4. **Do NOT invent marketing claims**: Never state unverified facts, years in business, or unserved cities (strictly avoid words like `regular`, `reliable`, `trusted`, `fast`, `experienced`, `years`, `guaranteed`, `free quote`, `no hidden charges`, `Coimbatore`, `Chennai`, `Madurai`).

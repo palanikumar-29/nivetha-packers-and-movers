@@ -18,7 +18,7 @@ class QuoteFormTest(TestCase):
             'phone': '9876543210',
             'move_type': MoveType.HOUSE,
             'moving_from': 'Tiruppur',
-            'moving_to': 'Chennai',
+            'moving_to': 'Tamil Nadu',
             'preferred_date': self.future_date.isoformat(),
             'details': '2 BHK flat, ground floor to 2nd floor with lift',
             'website': '',
@@ -33,7 +33,7 @@ class QuoteFormTest(TestCase):
             'phone': '6381234567',
             'move_type': MoveType.VEHICLE,
             'moving_from': 'Tiruppur',
-            'moving_to': 'Madurai',
+            'moving_to': 'Tamil Nadu',
         }
         form = QuoteForm(data=form_data)
         self.assertTrue(form.is_valid(), f"Form errors: {form.errors}")
@@ -48,7 +48,7 @@ class QuoteFormTest(TestCase):
                     'phone': '9876543210',
                     'move_type': 'house',
                     'moving_from': 'Tiruppur',
-                    'moving_to': 'Madurai',
+                    'moving_to': 'Tamil Nadu',
                 }
                 data.pop(field)
                 form = QuoteForm(data=data)
@@ -65,7 +65,7 @@ class QuoteFormTest(TestCase):
                     'phone': phone,
                     'move_type': 'office',
                     'moving_from': 'Tiruppur',
-                    'moving_to': 'Chennai',
+                    'moving_to': 'Tamil Nadu',
                 })
                 self.assertTrue(form.is_valid(), f"Expected {phone} to be valid: {form.errors}")
 
@@ -85,7 +85,7 @@ class QuoteFormTest(TestCase):
                     'phone': phone,
                     'move_type': 'office',
                     'moving_from': 'Tiruppur',
-                    'moving_to': 'Chennai',
+                    'moving_to': 'Tamil Nadu',
                 })
                 self.assertFalse(form.is_valid())
                 self.assertIn('phone', form.errors)
@@ -99,7 +99,7 @@ class QuoteFormTest(TestCase):
                     'phone': '9876543210',
                     'move_type': 'house',
                     'moving_from': 'Tiruppur',
-                    'moving_to': 'Chennai',
+                    'moving_to': 'Tamil Nadu',
                     'preferred_date': test_date.isoformat(),
                 })
                 self.assertTrue(form.is_valid(), f"Date {test_date} should be valid: {form.errors}")
@@ -111,7 +111,7 @@ class QuoteFormTest(TestCase):
             'phone': '9876543210',
             'move_type': 'house',
             'moving_from': 'Tiruppur',
-            'moving_to': 'Chennai',
+            'moving_to': 'Tamil Nadu',
             'preferred_date': self.past_date.isoformat(),
         })
         self.assertFalse(form.is_valid())
@@ -125,7 +125,7 @@ class QuoteFormTest(TestCase):
             'phone': '9876543210',
             'move_type': 'house',
             'moving_from': 'Tiruppur',
-            'moving_to': 'Chennai',
+            'moving_to': 'Tamil Nadu',
             'website': 'https://spam-link.xyz',
         })
         self.assertTrue(form.is_valid())

@@ -304,7 +304,6 @@ class PalettePresetsTest(TestCase):
         response = self.client.get('/contact/')
         content = response.content.decode('utf-8')
         self.assertIn('placeholder="City or town"', content)
-        self.assertNotIn('placeholder="Chennai / Madurai"', content)
 
     def test_services_seed_command_avoids_invented_phrases(self):
         """Seed command uses plain neutral wording without invented phrases."""

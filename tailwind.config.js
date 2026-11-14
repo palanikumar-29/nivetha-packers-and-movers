@@ -39,7 +39,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['"Hind Madurai"', 'sans-serif'],
+        sans: ['"Hind"', 'sans-serif'],
       },
     },
   },

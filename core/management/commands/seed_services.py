@@ -9,19 +9,19 @@ class Command(BaseCommand):
         initial_services = [
             {
                 'title': 'Household Shifting',
-                'description': 'Moving household goods and furniture within Tiruppur and on trips to Chennai, Madurai and nearby towns.',
+                'description': 'Moving household goods and furniture within Tiruppur and all over Tamil Nadu.',
                 'order': 1,
                 'is_active': True,
             },
             {
                 'title': 'Office Relocation',
-                'description': 'Moving office desks, equipment, and documents within Tiruppur and to Chennai and Madurai.',
+                'description': 'Moving office desks, equipment, and documents within Tiruppur and all over Tamil Nadu.',
                 'order': 2,
                 'is_active': True,
             },
             {
                 'title': 'Two-Wheeler & Vehicle Transport',
-                'description': 'Transport for two-wheelers and personal vehicles within Tiruppur and to Chennai and Madurai.',
+                'description': 'Transport for two-wheelers and personal vehicles within Tiruppur and all over Tamil Nadu.',
                 'order': 3,
                 'is_active': True,
             },

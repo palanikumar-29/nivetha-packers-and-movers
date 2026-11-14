@@ -116,7 +116,14 @@ class SeoInfrastructureTest(TestCase):
             self.assertEqual(schema.get('name'), 'Nivetha Packers and Movers')
             self.assertEqual(schema.get('url'), 'http://localhost:8000')
             self.assertEqual(schema.get('telephone'), '+91 98765 43210')
-            self.assertEqual(schema.get('areaServed'), ['Tiruppur', 'Chennai', 'Madurai'])
+            expected_area = [
+                'Tiruppur',
+                {
+                    '@type': 'AdministrativeArea',
+                    'name': 'Tamil Nadu',
+                },
+            ]
+            self.assertEqual(schema.get('areaServed'), expected_area)
 
             # Verify address structure
             self.assertIsInstance(schema.get('address'), dict)
@@ -196,6 +203,8 @@ class SeoInfrastructureTest(TestCase):
 
     def test_page_titles_and_descriptions_length(self):
         pages = ['core:home', 'core:services', 'core:gallery', 'core:about', 'core:contact']
+        titles = set()
+        descriptions = set()
         for page_name in pages:
             response = self.client.get(reverse(page_name))
             self.assertEqual(response.status_code, 200)
@@ -205,11 +214,28 @@ class SeoInfrastructureTest(TestCase):
             self.assertIsNotNone(title_match, f"Missing title on {page_name}")
             title = title_match.group(1).strip()
             self.assertLessEqual(len(title), 60, f"Title too long on {page_name}: {title}")
+            self.assertIn("Tiruppur", title)
+            self.assertNotIn("Chennai", title)
+            self.assertNotIn("Madurai", title)
+            titles.add(title)
 
             desc_match = re.search(r'<meta name="description" content="(.*?)">', content)
             self.assertIsNotNone(desc_match, f"Missing description on {page_name}")
             desc = desc_match.group(1).strip()
             self.assertLessEqual(len(desc), 160, f"Description too long on {page_name}: {desc}")
+            self.assertIn("Tiruppur", desc)
+            self.assertIn("Tamil Nadu", desc)
+            self.assertNotIn("Chennai", desc)
+            self.assertNotIn("Madurai", desc)
+            descriptions.add(desc)
+
+            # Exactly one <h1> per page
+            h1_count = len(re.findall(r'<h1\b', content))
+            self.assertEqual(h1_count, 1, f"Expected exactly one <h1> on {page_name}, found {h1_count}")
+
+        # Unique titles and descriptions across all pages
+        self.assertEqual(len(titles), len(pages))
+        self.assertEqual(len(descriptions), len(pages))
 
     @override_settings(DEBUG=False, ALLOWED_HOSTS=['testserver', 'localhost', '127.0.0.1'], ALLOW_INDEXING=True)
     def test_404_page_has_noindex_meta_tag(self):

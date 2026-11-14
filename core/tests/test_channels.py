@@ -15,7 +15,7 @@ class ChannelsLayerTest(TestCase):
             phone="9876543210",
             move_type=MoveType.HOUSE,
             moving_from="Tiruppur",
-            moving_to="Chennai",
+            moving_to="Tamil Nadu",
             preferred_date=date(2026, 12, 1),
             details="20 boxes and fridge",
             status="New"
@@ -51,7 +51,7 @@ class ChannelsLayerTest(TestCase):
         self.assertIn("9876543210", message_text)
         self.assertIn("House Move", message_text)
         self.assertIn("Tiruppur", message_text)
-        self.assertIn("Chennai", message_text)
+        self.assertIn("Tamil Nadu", message_text)
         self.assertIn("2026-12-01", message_text)
         self.assertIn("20 boxes and fridge", message_text)
 
@@ -99,7 +99,7 @@ class ChannelsLayerTest(TestCase):
             'phone': '9876543210',
             'move_type': 'house',
             'moving_from': 'Tiruppur',
-            'moving_to': 'Madurai',
+            'moving_to': 'Tamil Nadu',
         }
         res = client.post(reverse('core:contact'), data=payload)
         self.assertEqual(res.status_code, 302)

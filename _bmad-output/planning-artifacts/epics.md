@@ -57,7 +57,7 @@ NFR-11: README — local setup and Render + Neon deployment docs, including stag
 No UX design document exists. Direction from PRD:
 - Road-sign theme: dark asphalt background, highway-green + signal-amber accents.
 - Condensed display font for headings; plain readable body font.
-- Hero: highway-sign route board "Tiruppur → Chennai → Madurai" — the single memorable element.
+- Hero: highway-sign route board "Tiruppur: Within Tiruppur, Across Tamil Nadu" — the single memorable element.
 - Mobile-first; quiet, clear, readable on small screens.
 
 ### FR Coverage Map
@@ -157,7 +157,7 @@ So that I immediately understand what the business does and how to contact them.
 
 **Given** the Home page  
 **When** it renders  
-**Then** it contains all four content blocks: (1) hero section with the highway-sign route board showing "Tiruppur → Chennai → Madurai" and a primary CTA button; (2) active Services summary drawn from the Service table; (3) "how a move works" steps section; (4) the embedded Quote form markup.
+**Then** it contains all four content blocks: (1) hero section with the highway-sign route board showing "Tiruppur", "Within Tiruppur", and "Across Tamil Nadu" and a primary CTA button; (2) active Services summary drawn from the Service table; (3) "how a move works" steps section; (4) the embedded Quote form markup.
 
 **Given** the embedded Quote form on the Home page  
 **When** it renders  
@@ -214,7 +214,7 @@ So that I can learn about the business in detail and reach the quote form from m
 **When** it renders  
 **Then** it includes the Quote form (submission handled in Story 1.4) and a visible phone/WhatsApp contact option.
 
-**Given** local keywords (Tiruppur, Chennai, Madurai)  
+**Given** local keywords (Tiruppur, Tamil Nadu)  
 **When** the Services and Contact pages render  
 **Then** they appear naturally in at least one heading or paragraph on each page.
 
@@ -330,7 +330,7 @@ So that people searching "packers and movers Tiruppur" find the business.
 
 **Given** the Home page  
 **When** it renders  
-**Then** a `<script type="application/ld+json">` block is present with a valid `LocalBusiness` + `MovingCompany` JSON-LD schema containing: `"name": "Nivetha Packers and Movers"`, `"address"` with `"addressLocality": "Tiruppur"` and `"addressRegion": "Tamil Nadu"`, `"telephone"` from `BUSINESS_PHONE` env var, and `"areaServed"` including Tiruppur, Chennai, and Madurai.
+**Then** a `<script type="application/ld+json">` block is present with a valid `LocalBusiness` + `MovingCompany` JSON-LD schema containing: `"name": "Nivetha Packers and Movers"`, `"address"` with `"addressLocality": "Tiruppur"` and `"addressRegion": "Tamil Nadu"`, `"telephone"` from `BUSINESS_PHONE` env var, and `"areaServed"` including Tiruppur and Tamil Nadu.
 
 **Given** any public page's `<title>` and `<meta name="description">`  
 **When** their lengths are checked  

@@ -31,8 +31,10 @@ def seo_context(request):
         },
         "areaServed": [
             "Tiruppur",
-            "Chennai",
-            "Madurai",
+            {
+                "@type": "AdministrativeArea",
+                "name": "Tamil Nadu",
+            },
         ],
     }
     if phone:

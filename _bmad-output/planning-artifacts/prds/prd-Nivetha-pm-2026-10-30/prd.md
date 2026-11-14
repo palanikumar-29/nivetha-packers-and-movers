@@ -32,10 +32,10 @@ The site is not a booking platform, a portal, or a catalogue. It is a trust-buil
 ### 2.2 Key User Journeys
 
 - **UJ-1. Ravi requests a quote from his phone.**
-  Ravi, a salaried employee relocating within Tiruppur, searches "packers and movers Tiruppur" on his phone. He taps the result, scans the hero, sees the highway-sign route board, reads "Tiruppur → Chennai" and knows this is local. He taps the floating WhatsApp button. Alternatively, he scrolls to the quote form, fills in name, phone, "house move", from/to, and submits. He sees a confirmation message. **Edge case:** if he enters a past date, the form rejects it inline and explains why.
+  Ravi, a salaried employee relocating within Tiruppur, searches "packers and movers Tiruppur" on his phone. He taps the result, scans the hero, sees the highway-sign route board, reads "Tiruppur: Within Tiruppur, Across Tamil Nadu" and knows this is local. He taps the floating WhatsApp button. Alternatively, he scrolls to the quote form, fills in name, phone, "house move", from/to, and submits. He sees a confirmation message. **Edge case:** if he enters a past date, the form rejects it inline and explains why.
 
 - **UJ-2. Owner Nivetha receives and acts on an enquiry.**
-  Nivetha is on-site supervising a move. Her phone buzzes with a Telegram message: "New enquiry — Ravi, 9xxxxxxxx, House move, Tiruppur → Chennai, 15 Nov." She calls him back within minutes. Later at home she opens `/panel/`, finds the enquiry, marks it "Called", adds a note.
+  Nivetha is on-site supervising a move. Her phone buzzes with a Telegram message: "New enquiry — Ravi, 9xxxxxxxx, House move, Tiruppur, 15 Nov." She calls him back within minutes. Later at home she opens `/panel/`, finds the enquiry, marks it "Called", adds a note.
 
 - **UJ-3. A searcher validates the business before calling.**
   A first-time visitor reads the Services page, browses Gallery photos, and reads the About page. Nothing is fabricated; all content is accurate or clearly placeholder. They tap the floating Call button.
@@ -60,7 +60,7 @@ The site is not a booking platform, a portal, or a catalogue. It is a trust-buil
 
 ### 4.1 Public Five-Page Site
 
-**Description:** Five server-rendered Django template pages — Home, Services, Gallery, About, Contact — each with a unique `<title>` and `<meta description>`, one `<h1>`, a canonical `<link>`, and semantic HTML. Pages are mobile-first via Tailwind CSS (built locally with the Tailwind CLI, not CDN). Images use `loading="lazy"` and descriptive `alt` text. The visual theme is road-sign inspired: dark asphalt background, highway green and signal amber accents, a condensed display font for headings. The hero on Home contains a highway-sign style route board (e.g. "Tiruppur → Chennai → Madurai") as the one memorable design element.
+**Description:** Five server-rendered Django template pages — Home, Services, Gallery, About, Contact — each with a unique `<title>` and `<meta description>`, one `<h1>`, a canonical `<link>`, and semantic HTML. Pages are mobile-first via Tailwind CSS (built locally with the Tailwind CLI, not CDN). Images use `loading="lazy"` and descriptive `alt` text. The visual theme is road-sign inspired: dark asphalt background, highway green and signal amber accents, a condensed display font for headings. The hero on Home contains a highway-sign style route board (e.g. "Tiruppur: Within Tiruppur, Across Tamil Nadu") as the one memorable design element.
 
 Floating Call and WhatsApp buttons appear on every page on mobile viewports. They link to `tel:` and `https://wa.me/` respectively.
 
@@ -70,7 +70,7 @@ Floating Call and WhatsApp buttons appear on every page on mobile viewports. The
 Every public page (`/`, `/services/`, `/gallery/`, `/about/`, `/contact/`) returns HTTP 200 and passes a basic mobile-friendliness check (no horizontal scroll, tap targets ≥ 44 px).
 
 #### FR-2: Per-page SEO metadata
-Each page has a unique `<title>` (≤ 60 chars), `<meta name="description">` (≤ 160 chars), one `<h1>`, and a `<link rel="canonical">`. Local keywords (Tiruppur, Chennai, Madurai) appear naturally in headings and copy.
+Each page has a unique `<title>` (≤ 60 chars), `<meta name="description">` (≤ 160 chars), one `<h1>`, and a `<link rel="canonical">`. Local keywords (Tiruppur, Tamil Nadu) appear naturally in headings and copy.
 
 #### FR-3: Floating contact buttons
 On viewports ≤ 768 px, a fixed Call button (`tel:`) and a fixed WhatsApp button (`https://wa.me/`) are visible and tappable on every page. They do not obstruct primary content.
